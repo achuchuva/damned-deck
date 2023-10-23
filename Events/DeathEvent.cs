@@ -1,21 +1,16 @@
 using System;
 
-public class DamageEvent
+public class DeathEvent : Event
 {
 
-    private Dictionary<Card, int> _damagedCards;
-    public Dictionary<Card, int> DamagedCards
+    private List<Card> _destroyedCards;
+    public List<Card> DestroyedCards
     {
-        get { return _damagedCards; }
+        get { return _destroyedCards; }
     }
 
-    public DamageEvent(Dictionary<Card, int> damagedCards)
+    public DeathEvent(List<Card> destroyedCards)
     {
-        _damagedCards = damagedCards;
-    }
-
-    public void AddCard(Card card, int damage)
-    {
-        _damagedCards.Add(card, damage);
+        _destroyedCards = destroyedCards;
     }
 }

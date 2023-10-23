@@ -6,13 +6,13 @@ public abstract class Card
     private int _cost;
     public int Cost
     {
-        get { return _manaCost; }
+        get { return _cost; }
     }
-    private Ability _ability;
-    public Ability Ability
-    {
-        get { return _ability; }
-    }
+    // private Ability _ability;
+    // public Ability Ability
+    // {
+    //     get { return _ability; }
+    // }
     private string _name;
     public string Name
     {
@@ -24,10 +24,10 @@ public abstract class Card
         get { return _description; }
     }
 
-    public Card(int cost, Ability ability, string desc)
+    public Card(int cost, string name, string desc)
     {
         _cost = cost;
-        _ability = ability;
+        _name = name;
         _description = desc;
     }
 

@@ -1,7 +1,7 @@
 public class Spell : Card
 {
 
-    public Spell(int cost, Ability ability, string desc) : base(cost, ability, desc)
+    public Spell(int cost, string name, string desc) : base(cost, name, desc)
     {
 
     }

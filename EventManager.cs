@@ -1,6 +1,6 @@
 public class EventManager
 {
-    public static EventManager _manager;
+    public static EventManager _instance;
     private List<Card> _subscribers;
     public List<Card> Subscribers
     {
@@ -10,11 +10,21 @@ public class EventManager
     public Game Game
     {
         get { return _game; }
+        set { _game = value; }
     }
 
-    public EventManager(Game game)
+    public EventManager()
     {
-        _game = game;
+
+    }
+
+    public static EventManager GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new EventManager();
+        }
+        return _instance;
     }
 
     public void AddSubscriber(Card card)
@@ -28,7 +38,7 @@ public class EventManager
         {
             damagedCard.Key.TakeDamage(damagedCard.Value);
         }
-        DamageEvent _event = new DamageEvent(Game, damagedCards);
+        DamageEvent _event = new DamageEvent(damagedCards);
 
         foreach (Card subscriber in Subscribers)
         {

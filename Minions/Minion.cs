@@ -6,7 +6,7 @@ public class Minion : Card
         get { return _health; }
     }
 
-    public Minion(int cost, Ability ability, string desc, int health) : base(cost, ability, desc)
+    public Minion(int cost, string name, string desc, int health) : base(cost, name, desc)
     {
         _health = health;
     }

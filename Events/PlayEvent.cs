@@ -1,8 +1,7 @@
 using System;
 
-public class PlayEvent
+public class PlayEvent : Event
 {
-
     private Card _playedCard;
     public Card PlayedCard
     {

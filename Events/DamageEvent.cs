@@ -1,6 +1,6 @@
 using System;
 
-public class DamageEvent
+public class DamageEvent : Event
 {
 
     private Dictionary<Card, int> _damagedCards;
@@ -12,10 +12,5 @@ public class DamageEvent
     public DamageEvent(Dictionary<Card, int> damagedCards)
     {
         _damagedCards = damagedCards;
-    }
-
-    public void AddCard(Card card, int damage)
-    {
-        _damagedCards.Add(card, damage);
     }
 }

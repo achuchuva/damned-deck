@@ -1,16 +1,13 @@
 public class AcolyteOfPain : Minion
 {
-    public AcolyteOfPain()
+    public AcolyteOfPain() : base(3, "Acolyte of Pain", "Whenever this minion takes damage, draw a card.", 3)
     {
-        _name = "Acolyte of Pain";
-        _description = "Whenever this minion takes damange, draw a card.";
-        _manaCost = 3;
-        _health = 3;
+        
     }
 
     public override void HandleEvent(Event _event)
     {
-        if (_event.GetType() != DamageEvent)
+        if (!(_event is DamageEvent))
             return;
 
         DamageEvent damageEvent = (DamageEvent)_event;

@@ -3,7 +3,11 @@ using SplashKitSDK;
 
 public class Deck
 {
-    public List<Card> currentCards;
+    private List<Card> _currentCards;
+    public List<Card> CurrentCards
+    {
+        get { return CurrentCards; }
+    }
 
     public Deck()
     {
