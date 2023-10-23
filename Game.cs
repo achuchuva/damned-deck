@@ -21,8 +21,11 @@ public class Game
         get { return _mana; }
     }
 
-    public Game()
+    public Game(Board startingBoard, Hand startingHand, Deck startingDeck, int startingMana)
     {
-
+        _board = startingBoard;
+        _hand = startingHand;
+        _deck = startingDeck;
+        _mana = startingMana;
     }
 }

@@ -3,14 +3,21 @@ using System;
 public class DamageEvent : Event
 {
 
-    private Dictionary<Card, int> _damagedCards;
-    public Dictionary<Card, int> DamagedCards
+    private Card _damagedCard;
+    public Card DamagedCard
     {
-        get { return _damagedCards; }
+        get { return _damagedCard; }
     }
 
-    public DamageEvent(Dictionary<Card, int> damagedCards)
+    private int _amount;
+    public int Amount
     {
-        _damagedCards = damagedCards;
+        get { return _amount; }
+    }
+
+    public DamageEvent(Card damagedCard, int amount)
+    {
+        _damagedCard = damagedCard;
+        _amount = amount;
     }
 }

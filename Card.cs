@@ -31,24 +31,19 @@ public abstract class Card
         _description = desc;
     }
 
-    public virtual void TakeDamage(int amount)
-    {
+    public virtual void TakeDamage(int amount) { }
 
-    }
-
-    public virtual void Die()
-    {
-
-    }
+    public virtual void Die() { }
 
     public virtual void Discard()
-    {
-        
+    { 
+        EventManager.GetInstance().Game.Hand.RemoveCard(this);
+        EventManager.GetInstance().Game.Deck.RemoveCard(this);
     }
+
+    public virtual void Heal(int amount) { }
+
+    public virtual void SetMaxHealth(int health) { }
 
     public abstract void HandleEvent(Event e);
 }
-
-
-// when this takes damage, draw a card
-// battlecry: deal 1 damage to all

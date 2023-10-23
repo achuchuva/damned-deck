@@ -14,13 +14,12 @@ public class RavagingGhoul : Minion
 
         if (playEvent.PlayedCard == this)
         {
-            Dictionary<Card, int> damagedCards = new Dictionary<Card, int>();
             foreach (Card card in EventManager.GetInstance().Game.Board.CurrentCards)
             {
-                damagedCards.Add(card, 1);
+                card.TakeDamage(1);
+                EventManager.GetInstance().OnDamage(card, 1);
             }
             
-            EventManager.GetInstance().OnDamage(damagedCards);
         }
     }
 }

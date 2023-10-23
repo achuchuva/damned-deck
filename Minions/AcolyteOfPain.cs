@@ -12,9 +12,10 @@ public class AcolyteOfPain : Minion
 
         DamageEvent damageEvent = (DamageEvent)_event;
 
-        if (damageEvent.DamagedCards.ContainsKey(this))
+        if (damageEvent.DamagedCard == this)
         {
-            Console.WriteLine("Woooo! Draw a card");
+            EventManager.GetInstance().Game.Deck.DrawCard(1);
+            EventManager.GetInstance().OnDraw(1);
         }
     }
 }

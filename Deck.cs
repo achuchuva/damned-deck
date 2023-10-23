@@ -24,11 +24,25 @@ public class Deck
         _currentCards.Remove(card);
     }
 
-    public Card DrawCard()
+    public void DrawCard(int amount)
     {
-        Card card = _currentCards.First();
-        RemoveCard(card);
-        return card;
+        if (amount > _currentCards.Count)
+        {
+            amount = _currentCards.Count;
+        }
+        _currentCards.RemoveRange(0, amount);
+        Hand hand = EventManager.GetInstance().Game.Hand; 
+        foreach (Card card in hand.CurrentCards)
+        {
+            if (hand.CurrentCards.Count < hand.MaxCards)
+            {
+                EventManager.GetInstance().Game.Hand.AddCard(card);
+            }
+            else
+            {
+                card.Discard();
+            }
+        }
     }
 
     public void Shuffle()

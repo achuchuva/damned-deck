@@ -1,6 +1,6 @@
 public class EventManager
 {
-    public static EventManager _instance;
+    public static EventManager _instance = GetInstance();
     private List<Card> _subscribers;
     public List<Card> Subscribers
     {
@@ -15,7 +15,7 @@ public class EventManager
 
     public EventManager()
     {
-
+        _subscribers = new List<Card>();
     }
 
     public static EventManager GetInstance()
@@ -32,24 +32,38 @@ public class EventManager
         _subscribers.Add(card);
     }
 
-    public void OnPlay(Card playedCard)
+    public void OnDamage(Card damagedCard, int amount)
     {
-        PlayEvent _event = new PlayEvent(playedCard);
-
-        foreach (Card subscriber in Subscribers)
-        {
-            subscriber.HandleEvent(_event);
-        }
+        TriggerSubscribers(new DamageEvent(damagedCard, amount));
     }
 
-    public void OnDamage(Dictionary<Card, int> damagedCards)
+    public void OnDeath(Card destroyedCard)
     {
-        foreach (KeyValuePair<Card, int> damagedCard in damagedCards)
-        {
-            damagedCard.Key.TakeDamage(damagedCard.Value);
-        }
-        DamageEvent _event = new DamageEvent(damagedCards);
+        TriggerSubscribers(new DeathEvent(destroyedCard));
+    }
 
+    public void OnDraw(int amount)
+    {
+        TriggerSubscribers(new DrawEvent(amount));
+    }
+
+    public void OnHeal(Card healedCard, int amount)
+    {
+        TriggerSubscribers(new HealEvent(healedCard, amount));
+    }
+
+    public void OnPlay(Card playedCard)
+    {
+        TriggerSubscribers(new PlayEvent(playedCard));
+    }
+
+    public void OnSummon(List<Card> summonedCards)
+    {
+        TriggerSubscribers(new SummonEvent(summonedCards));
+    }
+
+    public void TriggerSubscribers(Event _event)
+    {
         foreach (Card subscriber in Subscribers)
         {
             subscriber.HandleEvent(_event);

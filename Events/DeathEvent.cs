@@ -3,14 +3,14 @@ using System;
 public class DeathEvent : Event
 {
 
-    private List<Card> _destroyedCards;
-    public List<Card> DestroyedCards
+    private Card _destroyedCard;
+    public Card DestroyedCard
     {
-        get { return _destroyedCards; }
+        get { return _destroyedCard; }
     }
 
-    public DeathEvent(List<Card> destroyedCards)
+    public DeathEvent(Card destroyedCard)
     {
-        _destroyedCards = destroyedCards;
+        _destroyedCard = destroyedCard;
     }
 }

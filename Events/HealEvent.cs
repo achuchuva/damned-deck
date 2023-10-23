@@ -3,14 +3,21 @@ using System;
 public class HealEvent : Event
 {
 
-    private Dictionary<Card, int> _healedCards;
-    public Dictionary<Card, int> HealedCards
+    private Card _healedCard;
+    public Card HealedCard
     {
-        get { return _healedCards; }
+        get { return _healedCard; }
     }
 
-    public HealEvent(Dictionary<Card, int> healedCards)
+    private int _amount;
+    public int Amount
     {
-        _healedCards = healedCards;
+        get { return _amount; }
+    }
+
+    public HealEvent(Card healedCard, int amount)
+    {
+        _healedCard = healedCard;
+        _amount = amount;
     }
 }
