@@ -32,6 +32,16 @@ public class EventManager
         _subscribers.Add(card);
     }
 
+    public void OnPlay(Card playedCard)
+    {
+        PlayEvent _event = new PlayEvent(playedCard);
+
+        foreach (Card subscriber in Subscribers)
+        {
+            subscriber.HandleEvent(_event);
+        }
+    }
+
     public void OnDamage(Dictionary<Card, int> damagedCards)
     {
         foreach (KeyValuePair<Card, int> damagedCard in damagedCards)
