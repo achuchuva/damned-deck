@@ -5,7 +5,15 @@ public class Program
 {
     public static void Main()
     {
-        new Window("Test Window", 800, 600);
-        SplashKit.Delay(5000);
+        Window window = new Window("Damned Deck", 1200, 900);
+        do
+        {
+            SplashKit.ProcessEvents();
+            SplashKit.ClearScreen();
+
+            SplashKit.ClearWindow(window, Color.Beige);
+
+            SplashKit.RefreshScreen();
+        } while (!window.CloseRequested);
     }
 }
