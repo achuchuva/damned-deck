@@ -12,7 +12,7 @@ public class Hand
     private List<Card> _currentCards;
     public List<Card> CurrentCards
     {
-        get { return CurrentCards; }
+        get { return _currentCards; }
     }
 
     public Hand()
@@ -28,5 +28,18 @@ public class Hand
     public void RemoveCard(Card card)
     {
         _currentCards.Remove(card);
+    }
+
+    public void Draw()
+    {
+        // Add code to render the cards on the board
+        int x = 300; // Adjust as needed
+        int y = 650; // Adjust as needed
+
+        foreach (Card card in CurrentCards)
+        {
+            card.Draw(x, y);
+            x += 100; // Adjust spacing between cards
+        }
     }
 }

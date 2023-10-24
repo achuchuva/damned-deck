@@ -1,3 +1,5 @@
+using SplashKitSDK;
+
 public class Minion : Card
 {
     private int _health;
@@ -12,7 +14,7 @@ public class Minion : Card
         get { return _maxHealth; }
     }
 
-    public Minion(int cost, string name, string desc, int health) : base(cost, name, desc)
+    public Minion(int cost, string name, string desc, Bitmap image, int health) : base(cost, name, desc, image)
     {
         _health = health;
         _maxHealth = health;
@@ -21,7 +23,6 @@ public class Minion : Card
     public override void TakeDamage(int amount)
     {
         _health -= amount;
-        EventManager.GetInstance().OnDamage(this, amount);
         if (_health <= 0)
         {
             Die();
@@ -31,7 +32,6 @@ public class Minion : Card
     public override void Die()
     {
         EventManager.GetInstance().Game.Board.RemoveCard(this);
-        EventManager.GetInstance().OnDeath(this);
     }
 
     public override void Heal(int amount)
@@ -39,7 +39,6 @@ public class Minion : Card
         if (_health < _maxHealth)
         {
             _health = Math.Max(_health + amount, MaxHealth);
-            EventManager.GetInstance().OnDamage(this, amount);
         }
     }
 

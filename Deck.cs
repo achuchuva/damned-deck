@@ -6,7 +6,7 @@ public class Deck
     private List<Card> _currentCards;
     public List<Card> CurrentCards
     {
-        get { return CurrentCards; }
+        get { return _currentCards; }
     }
 
     public Deck()

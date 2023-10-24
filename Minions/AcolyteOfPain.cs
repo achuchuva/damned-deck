@@ -1,8 +1,10 @@
+using SplashKitSDK;
+
 public class AcolyteOfPain : Minion
 {
-    public AcolyteOfPain() : base(3, "Acolyte of Pain", "Whenever this minion takes damage, draw a card.", 3)
+    public AcolyteOfPain() : base(3, "Acolyte of Pain", "Whenever this minion takes damage, draw a card.", SplashKit.LoadBitmap("acolyteofpain", "Images/acolyteofpain.png"), 3)
     {
-
+        
     }
 
     public override void HandleEvent(Event _event)

@@ -1,6 +1,8 @@
+using SplashKitSDK;
+
 public class RavagingGhoul : Minion
 {
-    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", 3)
+    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
     {
 
     }

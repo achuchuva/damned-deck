@@ -8,11 +8,12 @@ public abstract class Card
     {
         get { return _cost; }
     }
-    // private Ability _ability;
-    // public Ability Ability
-    // {
-    //     get { return _ability; }
-    // }
+    private Bitmap _image;
+    public Bitmap Image
+    {
+        get { return _image; }
+    }
+
     private string _name;
     public string Name
     {
@@ -24,11 +25,12 @@ public abstract class Card
         get { return _description; }
     }
 
-    public Card(int cost, string name, string desc)
+    public Card(int cost, string name, string desc, Bitmap image)
     {
         _cost = cost;
         _name = name;
         _description = desc;
+        _image = image;
     }
 
     public virtual void TakeDamage(int amount) { }
@@ -46,4 +48,25 @@ public abstract class Card
     public virtual void SetMaxHealth(int health) { }
 
     public abstract void HandleEvent(Event e);
+
+    public void Draw(int x, int y)
+    {
+        SplashKit.FillRectangle(Color.White, x, y, 150, 250);
+
+        Image.Draw(x, y);
+
+        SplashKit.DrawLine(Color.Black, x, y + 100, x + 150, y + 100);
+
+        SplashKit.DrawText(Name, Color.Black, x, y + 100);
+
+        SplashKit.DrawLine(Color.Black, x, y + 150, x + 150, y + 150);
+
+        SplashKit.DrawText(Description, Color.Black, x, y + 150);
+
+        SplashKit.FillCircle(Color.Yellow, x + 25, y + 25, 25);
+        SplashKit.DrawText(Cost.ToString(), Color.Black, x + 15, y + 15);
+
+        SplashKit.FillCircle(Color.Red, x + 125, y + 225, 25);
+        SplashKit.DrawText(Cost.ToString(), Color.Black, x + 115, y + 215);
+    }
 }
