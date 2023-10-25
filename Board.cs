@@ -17,23 +17,37 @@ public class Board
     public void AddCard(Card card)
     {
         _currentCards.Add(card);
+        EventManager.GetInstance().AddSubscriber(card);
     }
 
     public void RemoveCard(Card card)
     {
         _currentCards.Remove(card);
+        EventManager.GetInstance().RemoveSubscriber(card);
     }
 
-    public void Draw()
+    public void Draw(int centreX)
     {
-        // Add code to render the cards on the board
-        int x = 300; // Adjust as needed
-        int y = 250; // Adjust as needed
+        int totalWidth = CurrentCards.Count * 125;
+        int startX = centreX - totalWidth / 2;
 
         foreach (Card card in CurrentCards)
         {
-            card.Draw(x, y);
-            x += 100; // Adjust spacing between cards
+            if (!card.IsBeingDragged)
+            {
+                card.X = startX;
+                card.Y = 150;
+            }
+            card.Draw();
+            startX += 125;
+        }
+    }
+
+    public void Update()
+    {
+        foreach (Card card in CurrentCards)
+        {
+            card.Update();
         }
     }
 }

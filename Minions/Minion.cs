@@ -20,6 +20,19 @@ public class Minion : Card
         _maxHealth = health;
     }
 
+    public override void Play(bool isLeft)
+    {
+        if (isLeft)
+        {
+            EventManager.GetInstance().Game.Board.CurrentCards.Insert(0, this);
+        }
+        else
+        {
+            EventManager.GetInstance().Game.Board.AddCard(this);
+        }
+        base.Play(isLeft);
+    }
+
     public override void TakeDamage(int amount)
     {
         _health -= amount;

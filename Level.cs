@@ -5,11 +5,23 @@ public class Level
 {
     private EventManager _manager;
     private Game _game;
+    private Player _player;
 
     public Level()
     {
-        _manager = new EventManager();
         _game = new Game(new Board(), new Hand(), new Deck(), 3);
+        _manager = new EventManager(_game);
+        _player = new Player(_game);
+        Start();
+    }
+
+    public void Start()
+    {
+        _game.Board.AddCard(new AcolyteOfPain());
+        _game.Board.AddCard(new AcolyteOfPain());
+        _game.Hand.AddCard(new RavagingGhoul());
+        _game.Hand.AddCard(new RavagingGhoul());
+        _game.Hand.AddCard(new RavagingGhoul());
     }
 
     public void Draw()
@@ -20,10 +32,14 @@ public class Level
 
         SplashKit.DrawText(_game.Mana.ToString(), Color.White, 10, 10);
 
-        _game.Board.AddCard(new AcolyteOfPain());
-        _game.Hand.AddCard(new RavagingGhoul());
+        _game.Board.Draw(600);
+        _game.Hand.Draw(700);
+    }
 
-        _game.Board.Draw();
-        _game.Hand.Draw();
+    public void Update()
+    {
+        _player.Update();
+        _game.Board.Update();
+        _game.Hand.Update();
     }
 }

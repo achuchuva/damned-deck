@@ -13,6 +13,7 @@ public class Program
             SplashKit.ProcessEvents();
             SplashKit.ClearScreen();
 
+            level.Update();
             level.Draw();
 
             SplashKit.RefreshScreen();

@@ -22,6 +22,7 @@ public class Deck
     public void RemoveCard(Card card)
     {
         _currentCards.Remove(card);
+        EventManager.GetInstance().RemoveSubscriber(card);
     }
 
     public void DrawCard(int amount)

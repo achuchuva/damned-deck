@@ -13,16 +13,17 @@ public class EventManager
         set { _game = value; }
     }
 
-    public EventManager()
+    public EventManager(Game game)
     {
         _subscribers = new List<Card>();
+        _game = game;
     }
 
     public static EventManager GetInstance()
     {
         if (_instance == null)
         {
-            _instance = new EventManager();
+            _instance = new EventManager(new Game(new Board(), new Hand(), new Deck(), 10));
         }
         return _instance;
     }
@@ -30,6 +31,11 @@ public class EventManager
     public void AddSubscriber(Card card)
     {
         _subscribers.Add(card);
+    }
+
+    public void RemoveSubscriber(Card card)
+    {
+        _subscribers.Remove(card);
     }
 
     public void OnDamage(Card damagedCard, int amount)

@@ -9,6 +9,7 @@ public class RavagingGhoul : Minion
 
     public override void HandleEvent(Event _event)
     {
+        Console.WriteLine("WOOO I AM RECEIVING EVENTS");
         if (!(_event is PlayEvent))
             return;
 
