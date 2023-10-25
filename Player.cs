@@ -26,29 +26,14 @@ public class Player
             if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsClicked((int)SplashKit.MouseX(), (int)SplashKit.MouseY()))
             {
                 card.IsBeingDragged = !card.IsBeingDragged;
-                Point2D mousePos = new Point2D();
-                mousePos.X = SplashKit.MouseX();
-                mousePos.Y = SplashKit.MouseY();
-                Rectangle rect = new Rectangle();
-                rect.X = 50;
-                rect.Y = 100;
-                rect.Width = 950;
-                rect.Height = 300;
-                if (SplashKit.PointInRectangle(mousePos, rect))
+                if (SplashKit.MouseY() <= 450)
                 {
-                    // OMG! We played a card from hand!
-                    bool isLeft = mousePos.X <= 600;
-                    Play(card, isLeft);
+                    bool isLeft = SplashKit.MouseX() <= 600;
+                    Game.GetInstance().PlayCard(card, isLeft);
+                    break;
                 }
             }
         }
-    }
-
-    public void Play(Card card, bool isLeft)
-    {
-        card.Play(isLeft);
-        Console.WriteLine(Game.Board.CurrentCards.Count);
-        EventManager.GetInstance().OnPlay(card); 
     }
 
     public void UseAbility()

@@ -14,23 +14,16 @@ public class Minion : Card
         get { return _maxHealth; }
     }
 
+    private bool _hasDied = false;
+    public bool HasDied
+    {
+        get { return _hasDied; }
+    }
+
     public Minion(int cost, string name, string desc, Bitmap image, int health) : base(cost, name, desc, image)
     {
         _health = health;
         _maxHealth = health;
-    }
-
-    public override void Play(bool isLeft)
-    {
-        if (isLeft)
-        {
-            EventManager.GetInstance().Game.Board.CurrentCards.Insert(0, this);
-        }
-        else
-        {
-            EventManager.GetInstance().Game.Board.AddCard(this);
-        }
-        base.Play(isLeft);
     }
 
     public override void TakeDamage(int amount)
@@ -38,13 +31,8 @@ public class Minion : Card
         _health -= amount;
         if (_health <= 0)
         {
-            Die();
+            _hasDied = true;
         }
-    }
-
-    public override void Die()
-    {
-        EventManager.GetInstance().Game.Board.RemoveCard(this);
     }
 
     public override void Heal(int amount)
@@ -61,4 +49,11 @@ public class Minion : Card
     }
 
     public override void HandleEvent(Event _event) { }
+
+    public override void Draw()
+    {
+        base.Draw();
+        SplashKit.FillCircle(Color.Red, X + 100, Y + 200, 10);
+        SplashKit.DrawText(Health.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X + 97, Y + 194);
+    }
 }

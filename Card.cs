@@ -67,19 +67,14 @@ public abstract class Card
         _image = image;
     }
 
-    public virtual void Play(bool isLeft)
-    {
-        EventManager.GetInstance().Game.Hand.RemoveCard(this);
-    }
-
     public virtual void TakeDamage(int amount) { }
 
     public virtual void Die() { }
 
     public virtual void Discard()
     {
-        EventManager.GetInstance().Game.Hand.RemoveCard(this);
-        EventManager.GetInstance().Game.Deck.RemoveCard(this);
+        Game.GetInstance().Hand.RemoveCard(this);
+        Game.GetInstance().Deck.RemoveCard(this);
     }
 
     public virtual void Heal(int amount) { }
@@ -88,36 +83,33 @@ public abstract class Card
 
     public abstract void HandleEvent(Event e);
 
-    public void Draw()
+    public virtual void Draw()
     {
         SplashKit.FillRectangle(Color.White, X, Y, 100, 200);
         Image.Draw(X, Y);
 
         SplashKit.DrawLine(Color.Black, X, Y + 67, X + 100, Y + 67);
 
-        DrawMultilineText(Name, Color.Black, (int)X + 5, (int)Y + 72, 100, 12);
+        DrawMultilineText(Name, "Fonts/Roboto-Regular.ttf", Color.Black, (int)X + 5, (int)Y + 72, 100, 12);
 
         SplashKit.DrawLine(Color.Black, X, Y + 100, X + 100, Y + 100);
 
-        DrawMultilineText(Description, Color.Black, (int)X + 5, (int)Y + 105, 100, 12);
+        DrawMultilineText(Description, "Fonts/Roboto-Thin.ttf", Color.Black, (int)X + 5, (int)Y + 105, 100, 12);
 
         SplashKit.DrawRectangle(Color.Black, X, Y, 100, 200);
 
         SplashKit.FillCircle(Color.Yellow, X, Y, 10);
         SplashKit.DrawText(Cost.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X - 3, Y - 6);
-
-        SplashKit.FillCircle(Color.Red, X + 100, Y + 200, 10);
-        SplashKit.DrawText(Cost.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X + 97, Y + 194);
     }
 
-    private void DrawMultilineText(string text, Color color, int x, int y, int maxWidth, int lineHeight)
+    private void DrawMultilineText(string text, string font, Color color, int x, int y, int maxWidth, int lineHeight)
     {
         List<string> lines = SplitTextIntoLines(text, maxWidth);
         int lineY = y;
 
         foreach (string line in lines)
         {
-            SplashKit.DrawText(line, color, "Fonts/Roboto-Regular.ttf", 12, x, lineY);
+            SplashKit.DrawText(line, color, font, 12, x, lineY);
             lineY += lineHeight;
         }
     }

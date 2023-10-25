@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\OneDrive - Swinburne University\\COS20007\\DamnedDeck\\damned-deck\\SplashKitTest.csproj",
-      "projectName": "SplashKitTest",
-      "projectPath": "C:\\projects\\OneDrive - Swinburne University\\COS20007\\DamnedDeck\\damned-deck\\SplashKitTest.csproj",
+      "projectUniqueName": "C:\\projects\\OneDrive - Swinburne University\\COS20007\\DamnedDeck\\damned-deck\\damned-deck.csproj",
+      "projectName": "damned-deck",
+      "projectPath": "C:\\projects\\OneDrive - Swinburne University\\COS20007\\DamnedDeck\\damned-deck\\damned-deck.csproj",
       "packagesPath": "C:\\Users\\Anton\\.nuget\\packages\\",
       "outputPath": "C:\\projects\\OneDrive - Swinburne University\\COS20007\\DamnedDeck\\damned-deck\\obj\\",
       "projectStyle": "PackageReference",

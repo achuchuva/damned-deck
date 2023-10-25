@@ -14,16 +14,16 @@ public class Board
         _currentCards = new List<Card>();
     }
 
-    public void AddCard(Card card)
+    public void AddCard(Card card, int index)
     {
-        _currentCards.Add(card);
-        EventManager.GetInstance().AddSubscriber(card);
+        EventManager.GetInstance().AddSubscriber(e => card.HandleEvent(e));
+        _currentCards.Insert(index, card);
     }
 
     public void RemoveCard(Card card)
     {
+        EventManager.GetInstance().RemoveSubscriber(e => card.HandleEvent(e));
         _currentCards.Remove(card);
-        EventManager.GetInstance().RemoveSubscriber(card);
     }
 
     public void Draw(int centreX)

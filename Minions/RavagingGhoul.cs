@@ -9,7 +9,6 @@ public class RavagingGhoul : Minion
 
     public override void HandleEvent(Event _event)
     {
-        Console.WriteLine("WOOO I AM RECEIVING EVENTS");
         if (!(_event is PlayEvent))
             return;
 
@@ -17,12 +16,16 @@ public class RavagingGhoul : Minion
 
         if (playEvent.PlayedCard == this)
         {
-            foreach (Card card in EventManager.GetInstance().Game.Board.CurrentCards)
+            foreach (Card card in Game.GetInstance().Board.CurrentCards)
             {
-                card.TakeDamage(1);
-                EventManager.GetInstance().OnDamage(card, 1);
+                if (card != this)
+                {
+                    card.TakeDamage(1);
+                    EventManager.GetInstance().OnDamage(card, 1);
+                }
             }
-            
         }
+
+        base.HandleEvent(_event);
     }
 }

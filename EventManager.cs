@@ -1,41 +1,35 @@
 public class EventManager
 {
-    public static EventManager _instance = GetInstance();
-    private List<Card> _subscribers;
-    public List<Card> Subscribers
+    private static EventManager _instance = GetInstance();
+    private List<Action<Event>> _subscribers;
+    public List<Action<Event>> Subscribers
     {
         get { return _subscribers; }
     }
-    private Game _game;
-    public Game Game
-    {
-        get { return _game; }
-        set { _game = value; }
-    }
 
-    public EventManager(Game game)
+    public EventManager()
     {
-        _subscribers = new List<Card>();
-        _game = game;
+        _subscribers = new List<Action<Event>>();
+        _instance = this;
     }
 
     public static EventManager GetInstance()
     {
         if (_instance == null)
         {
-            _instance = new EventManager(new Game(new Board(), new Hand(), new Deck(), 10));
+            _instance = new EventManager();
         }
         return _instance;
     }
 
-    public void AddSubscriber(Card card)
+    public void AddSubscriber(Action<Event> callback)
     {
-        _subscribers.Add(card);
+        _subscribers.Add(callback);
     }
 
-    public void RemoveSubscriber(Card card)
+    public void RemoveSubscriber(Action<Event> callback)
     {
-        _subscribers.Remove(card);
+        _subscribers.Remove(callback);
     }
 
     public void OnDamage(Card damagedCard, int amount)
@@ -70,9 +64,9 @@ public class EventManager
 
     public void TriggerSubscribers(Event _event)
     {
-        foreach (Card subscriber in Subscribers)
+        foreach (Action<Event> subscriber in Subscribers)
         {
-            subscriber.HandleEvent(_event);
+            subscriber(_event);
         }
     }
 }

@@ -22,7 +22,6 @@ public class Deck
     public void RemoveCard(Card card)
     {
         _currentCards.Remove(card);
-        EventManager.GetInstance().RemoveSubscriber(card);
     }
 
     public void DrawCard(int amount)
@@ -31,23 +30,33 @@ public class Deck
         {
             amount = _currentCards.Count;
         }
-        _currentCards.RemoveRange(0, amount);
-        Hand hand = EventManager.GetInstance().Game.Hand; 
-        foreach (Card card in hand.CurrentCards)
+        List<Card> cardsToDraw = _currentCards.GetRange(0, amount);
+        Hand hand = Game.GetInstance().Hand;
+        foreach (Card card in cardsToDraw)
         {
             if (hand.CurrentCards.Count < hand.MaxCards)
             {
-                EventManager.GetInstance().Game.Hand.AddCard(card);
+                hand.AddCard(card);
             }
             else
             {
                 card.Discard();
             }
         }
+        _currentCards.RemoveRange(0, amount);
     }
 
     public void Shuffle()
     {
 
     }
+
+    public void Draw()
+    {
+        if (CurrentCards.Count > 0)
+        {
+            SplashKit.FillRectangle(Color.White, 1115, 400, 35, 150);
+        }
+    }
+
 }

@@ -9,19 +9,19 @@ public class Level
 
     public Level()
     {
-        _game = new Game(new Board(), new Hand(), new Deck(), 3);
-        _manager = new EventManager(_game);
+        _game = new Game(new Board(), new Hand(), new Deck(), 18);
+        _manager = new EventManager();
         _player = new Player(_game);
         Start();
     }
 
     public void Start()
     {
-        _game.Board.AddCard(new AcolyteOfPain());
-        _game.Board.AddCard(new AcolyteOfPain());
+        _game.Board.AddCard(new Anomalus(), 0);
+        _game.Hand.AddCard(new AcolyteOfPain());
         _game.Hand.AddCard(new RavagingGhoul());
-        _game.Hand.AddCard(new RavagingGhoul());
-        _game.Hand.AddCard(new RavagingGhoul());
+        _game.Deck.AddCard(new RavagingGhoul());
+        _game.Deck.AddCard(new BoulderfistOgre());
     }
 
     public void Draw()
@@ -30,10 +30,11 @@ public class Level
         SplashKit.DrawBitmap(levelImage, 0, 0);
         SplashKit.FreeBitmap(levelImage);
 
-        SplashKit.DrawText(_game.Mana.ToString(), Color.White, 10, 10);
+        SplashKit.DrawText(_game.Mana.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 50, 560, 15);
 
         _game.Board.Draw(600);
         _game.Hand.Draw(700);
+        _game.Deck.Draw();
     }
 
     public void Update()
