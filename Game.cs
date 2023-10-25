@@ -62,6 +62,26 @@ public class Game
         }
     }
 
+    public void HandleEvent(Event _event)
+    {
+        switch (_event)
+        {
+            case DamageEvent damageEvent:
+                Minion damagedMinion = (Minion)damageEvent.DamagedCard;
+                damagedMinion.TakeDamage(damageEvent.Amount);
+                if (damagedMinion.HasDied)
+                {
+                    EventManager.GetInstance().OnDeath(damagedMinion);
+                }
+                break;
+            case DrawEvent drawEvent:
+                Deck.DrawCard(1);
+                break;
+            default:
+                break;
+        }
+    }
+
     public void Cleanup()
     {
         List<Minion> minionsToDie = new List<Minion>();
@@ -70,7 +90,6 @@ public class Game
             if (minion.HasDied)
             {
                 minionsToDie.Add(minion);
-                EventManager.GetInstance().OnDeath(minion);
             }
         }
 

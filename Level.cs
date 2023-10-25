@@ -9,8 +9,9 @@ public class Level
 
     public Level()
     {
-        _game = new Game(new Board(), new Hand(), new Deck(), 18);
+        _game = new Game(new Board(), new Hand(), new Deck(), 15);
         _manager = new EventManager();
+        _manager.AddSubscriber(e => _game.HandleEvent(e));
         _player = new Player(_game);
         Start();
     }
@@ -20,8 +21,8 @@ public class Level
         _game.Board.AddCard(new Anomalus(), 0);
         _game.Hand.AddCard(new AcolyteOfPain());
         _game.Hand.AddCard(new RavagingGhoul());
+        _game.Hand.AddCard(new BoulderfistOgre());
         _game.Deck.AddCard(new RavagingGhoul());
-        _game.Deck.AddCard(new BoulderfistOgre());
     }
 
     public void Draw()

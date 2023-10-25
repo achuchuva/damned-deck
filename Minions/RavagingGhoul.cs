@@ -20,7 +20,6 @@ public class RavagingGhoul : Minion
             {
                 if (card != this)
                 {
-                    card.TakeDamage(1);
                     EventManager.GetInstance().OnDamage(card, 1);
                 }
             }

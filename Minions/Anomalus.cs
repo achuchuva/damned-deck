@@ -18,8 +18,10 @@ public class Anomalus : Minion
         {
             foreach (Card card in Game.GetInstance().Board.CurrentCards)
             {
-                card.TakeDamage(8);
-                EventManager.GetInstance().OnDamage(card, 8);
+                if (card != this)
+                {
+                    EventManager.GetInstance().OnDamage(card, 8);
+                }
             }
         }
 
