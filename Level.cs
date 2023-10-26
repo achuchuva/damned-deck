@@ -33,6 +33,10 @@ public class Level
 
         SplashKit.DrawText(_game.Mana.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 50, 560, 15);
 
+        Bitmap restartButton = SplashKit.LoadBitmap("restart", "Images/restart.png");
+
+        SplashKit.DrawBitmap(restartButton, 1100, 50);
+
         _game.Board.Draw(600);
         _game.Hand.Draw(700);
         _game.Deck.Draw();
