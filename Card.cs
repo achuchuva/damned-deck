@@ -71,17 +71,11 @@ public abstract class Card
 
     public virtual void Die() { }
 
-    public virtual void Discard()
-    {
-        Game.GetInstance().Hand.RemoveCard(this);
-        Game.GetInstance().Deck.RemoveCard(this);
-    }
-
     public virtual void Heal(int amount) { }
 
     public virtual void SetMaxHealth(int health) { }
 
-    public abstract void HandleEvent(Event e);
+    public abstract void HandleEvent(Event e, Game game);
 
     public virtual void Draw()
     {
@@ -141,11 +135,11 @@ public abstract class Card
         return lines;
     }
 
-    public bool IsClicked(int mouseX, int mouseY)
+    public bool IsMouseOver()
     {
         Point2D mousePos = new Point2D();
-        mousePos.X = mouseX;
-        mousePos.Y = mouseY;
+        mousePos.X = SplashKit.MouseX();
+        mousePos.Y = SplashKit.MouseY();
         Rectangle rect = new Rectangle();
         rect.X = X;
         rect.Y = Y;

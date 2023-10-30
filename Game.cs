@@ -1,6 +1,11 @@
 public class Game
 {
-    private static Game _instance = GetInstance();
+    private EventManager _eventManager;
+    public EventManager EventManager
+    {
+        get { return _eventManager; }
+    }
+
     private Board _board;
     public Board Board
     {
@@ -20,43 +25,44 @@ public class Game
     public int Mana
     {
         get { return _mana; }
+        set { _mana = value; }
     }
 
-    public Game(Board startingBoard, Hand startingHand, Deck startingDeck, int startingMana)
+    private bool _levelComplete = false;
+    public bool LevelComplete
     {
-        _board = startingBoard;
-        _hand = startingHand;
-        _deck = startingDeck;
-        _mana = startingMana;
-        _instance = this;
+        get { return _levelComplete; }
+        set { _levelComplete = value; }
     }
 
-    public static Game GetInstance()
+    public Game()
     {
-        if (_instance == null)
-        {
-            _instance = new Game(new Board(), new Hand(), new Deck(), 10);
-        }
-        return _instance;
+        _eventManager = new EventManager();
+        _eventManager.AddSubscriber(e => this.HandleEvent(e));
+        _board = new Board(_eventManager);
+        _hand = new Hand();
+        _deck = new Deck();
+        _mana = 0;
     }
 
     public void PlayCard(Card card, bool isLeft)
     {
-        if (_mana >= card.Cost)
+        if (_mana >= card.Cost && Board.MaxCards > Board.CurrentCards.Count)
         {
-            Game.GetInstance().Hand.RemoveCard(card);
+            Hand.RemoveCard(card);
             if (card is Minion)
             {
                 if (isLeft)
                 {
-                    Game.GetInstance().Board.AddCard(card, 0);
+                    Board.AddCard(card, 0);
                 }
                 else
                 {
-                    Game.GetInstance().Board.AddCard(card, Game.GetInstance().Board.CurrentCards.Count);
+                    Board.AddCard(card, Board.CurrentCards.Count);
                 }
+                _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
             }
-            EventManager.GetInstance().OnPlay(card);
+            _eventManager.OnPlay(card);
             Cleanup();
             _mana -= card.Cost;
         }
@@ -64,6 +70,9 @@ public class Game
 
     public void HandleEvent(Event _event)
     {
+        Console.WriteLine("In Game.HandleEvent " + _event.GetType());
+        Board.PrintCards();
+        Console.WriteLine("Finish Card List");
         switch (_event)
         {
             case DamageEvent damageEvent:
@@ -71,11 +80,11 @@ public class Game
                 damagedMinion.TakeDamage(damageEvent.Amount);
                 if (damagedMinion.HasDied)
                 {
-                    EventManager.GetInstance().OnDeath(damagedMinion);
+                    _eventManager.OnDeath(damagedMinion);
                 }
                 break;
             case DrawEvent drawEvent:
-                Deck.DrawCard(1);
+                Deck.DrawCard(Hand, 1);
                 break;
             default:
                 break;
@@ -85,15 +94,16 @@ public class Game
     public void Cleanup()
     {
         List<Minion> minionsToDie = new List<Minion>();
-        foreach (Minion minion in Game.GetInstance().Board.CurrentCards)
+        foreach (Minion minion in Board.CurrentCards)
         {
             if (minion.HasDied)
             {
                 minionsToDie.Add(minion);
+                _eventManager.RemoveSubscriber(e => minion.HandleEvent(e, this));
             }
         }
 
-        Game.GetInstance().Board.CurrentCards.RemoveAll(minion => minionsToDie.Contains(minion));
+        Board.CurrentCards.RemoveAll(minion => minionsToDie.Contains(minion));
 
         CheckForGameOver();
     }
@@ -104,7 +114,7 @@ public class Game
             Hand.CurrentCards.Count == 0 &&
             Deck.CurrentCards.Count == 0)
         {
-            Console.WriteLine("You win!");
+            _levelComplete = true;
         }
     }
 }

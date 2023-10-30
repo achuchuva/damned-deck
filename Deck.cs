@@ -24,23 +24,18 @@ public class Deck
         _currentCards.Remove(card);
     }
 
-    public void DrawCard(int amount)
+    public void DrawCard(Hand hand, int amount)
     {
         if (amount > _currentCards.Count)
         {
             amount = _currentCards.Count;
         }
         List<Card> cardsToDraw = _currentCards.GetRange(0, amount);
-        Hand hand = Game.GetInstance().Hand;
         foreach (Card card in cardsToDraw)
         {
             if (hand.CurrentCards.Count < hand.MaxCards)
             {
                 hand.AddCard(card);
-            }
-            else
-            {
-                card.Discard();
             }
         }
         _currentCards.RemoveRange(0, amount);

@@ -48,7 +48,7 @@ public class Minion : Card
         _maxHealth = MaxHealth;
     }
 
-    public override void HandleEvent(Event _event) { }
+    public override void HandleEvent(Event _event, Game game) { }
 
     public override void Draw()
     {

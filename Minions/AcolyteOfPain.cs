@@ -7,7 +7,7 @@ public class AcolyteOfPain : Minion
         
     }
 
-    public override void HandleEvent(Event _event)
+    public override void HandleEvent(Event _event, Game game)
     {
         if (!(_event is DamageEvent))
             return;
@@ -16,7 +16,7 @@ public class AcolyteOfPain : Minion
 
         if (damageEvent.DamagedCard == this)
         {
-            EventManager.GetInstance().OnDraw(1);
+            game.EventManager.OnDraw(1);
         }
     }
 }

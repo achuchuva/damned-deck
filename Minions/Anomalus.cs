@@ -7,7 +7,7 @@ public class Anomalus : Minion
 
     }
 
-    public override void HandleEvent(Event _event)
+    public override void HandleEvent(Event _event, Game game)
     {
         if (!(_event is DeathEvent))
             return;
@@ -16,15 +16,15 @@ public class Anomalus : Minion
 
         if (deathEvent.DestroyedCard == this)
         {
-            foreach (Card card in Game.GetInstance().Board.CurrentCards)
+            foreach (Card card in game.Board.CurrentCards)
             {
                 if (card != this)
                 {
-                    EventManager.GetInstance().OnDamage(card, 8);
+                    game.EventManager.OnDamage(card, 8);
                 }
             }
         }
 
-        base.HandleEvent(_event);
+        base.HandleEvent(_event, game);
     }
 }

@@ -8,7 +8,7 @@ public class Spell : Card
     
     }
 
-    public override void HandleEvent(Event e)
+    public override void HandleEvent(Event e, Game game)
     {
 
     }

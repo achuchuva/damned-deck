@@ -1,0 +1,44 @@
+[
+  {
+    "InitialMana": 15,
+    "InitialBoardCards": [
+      "Anomalus"
+    ],
+    "InitialHandCards": [
+      "AcolyteOfPain",
+      "RavagingGhoul",
+      "BoulderfistOgre"
+    ],
+    "InitialDeckCards": [
+      "RavagingGhoul"
+    ]
+  },
+  {
+    "InitialMana": 69,
+    "InitialBoardCards": [
+      "BoulderfistOgre"
+    ],
+    "InitialHandCards": [
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "RavagingGhoul"
+    ],
+    "InitialDeckCards": []
+  },
+  {
+    "InitialMana": 420,
+    "InitialBoardCards": [
+      "AcolyteOfPain",
+      "BoulderfistOgre"
+    ],
+    "InitialHandCards": [
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "RavagingGhoul",
+      "Anomalus"
+    ],
+    "InitialDeckCards": [
+      "BoulderfistOgre"
+    ]
+  }
+]

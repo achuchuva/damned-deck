@@ -1,6 +1,5 @@
 public class EventManager
 {
-    private static EventManager _instance = GetInstance();
     private List<Action<Event>> _subscribers;
     public List<Action<Event>> Subscribers
     {
@@ -10,16 +9,6 @@ public class EventManager
     public EventManager()
     {
         _subscribers = new List<Action<Event>>();
-        _instance = this;
-    }
-
-    public static EventManager GetInstance()
-    {
-        if (_instance == null)
-        {
-            _instance = new EventManager();
-        }
-        return _instance;
     }
 
     public void AddSubscriber(Action<Event> callback)
