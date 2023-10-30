@@ -16,7 +16,9 @@ public class Anomalus : Minion
 
         if (deathEvent.DestroyedCard == this)
         {
-            foreach (Card card in game.Board.CurrentCards)
+            Selection selection = new Selection(game.Board.CurrentCards);
+            List<Card> targets = selection.GetTargets(TargetType.AllButSelf, this);
+            foreach (Card card in targets)
             {
                 if (card != this)
                 {

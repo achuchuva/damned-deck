@@ -5,7 +5,6 @@ public class Program
 {
     public static void Main()
     {
-
         List<Level>? levels = GetLevels();
         Player player = new Player(levels);
         Menu menu = new Menu();

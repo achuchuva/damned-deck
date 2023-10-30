@@ -16,9 +16,9 @@ public class RavagingGhoul : Minion
 
         if (playEvent.PlayedCard == this)
         {
-            Console.WriteLine("In RavagingGhoul.HandleEvent");
-            game.Board.PrintCards();
-            foreach (Card card in game.Board.CurrentCards)
+            Selection selection = new Selection(game.Board.CurrentCards);
+            List<Card> targets = selection.GetTargets(TargetType.AllButSelf, this);
+            foreach (Card card in targets)
             {
                 if (card != this)
                 {

@@ -70,9 +70,6 @@ public class Game
 
     public void HandleEvent(Event _event)
     {
-        Console.WriteLine("In Game.HandleEvent " + _event.GetType());
-        Board.PrintCards();
-        Console.WriteLine("Finish Card List");
         switch (_event)
         {
             case DamageEvent damageEvent:

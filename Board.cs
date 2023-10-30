@@ -23,20 +23,7 @@ public class Board
 
     public void AddCard(Card card, int index)
     {
-        Console.WriteLine("In Board.AddCard. Going to add " + card.Name);
-        PrintCards();
         _currentCards.Insert(index, card);
-        PrintCards();
-        Console.WriteLine("Added card");
-    }
-
-    public void PrintCards()
-    {
-        foreach (Card card in CurrentCards)
-        {
-            Console.Write(card.Name + ",");
-        }
-        Console.WriteLine("");
     }
 
     public void RemoveCard(Card card)
