@@ -81,6 +81,10 @@ public class Level
                 return new KnightCaptain();
             case "ManaReservoir":
                 return new ManaReservoir();
+            case "TwistingNether":
+                return new TwistingNether();
+            case "Darkbomb":
+                return new Darkbomb();
             default:
                 throw new Exception("Unknown card ID: " + id);
         }

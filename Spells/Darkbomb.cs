@@ -1,18 +1,18 @@
 using SplashKitSDK;
 
-public class KnightCaptain : Minion
+public class Darkbomb : Spell
 {
-    public KnightCaptain() : base(3, "Knight-Captain", "Ability: Deal 3 damage.", EffectType.Damage, TargetType.Chosen, TriggerType.OnAbility, SplashKit.LoadBitmap("knightcaptain", "Images/knightcaptain.png"), 3)
+    public Darkbomb() : base(2, "Darkbomb", "Deal 3 damage.", EffectType.Damage, TargetType.Chosen, SplashKit.LoadBitmap("darkbomb", "Images/darkbomb.png"))
     {
 
     }
 
     public override void HandleEvent(Event _event, Game game)
     {
-        if (!(_event is AbilityEvent))
+        if (!(_event is PlayEvent))
             return;
 
-        AbilityEvent abilityEvent = (AbilityEvent)_event;
+        PlayEvent playEvent = (PlayEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
         if (TargetType == TargetType.Chosen)
@@ -20,7 +20,7 @@ public class KnightCaptain : Minion
             targets = game.Targets;
         }
 
-        if (abilityEvent.AbilityCard == this)
+        if (playEvent.PlayedCard == this)
         {
             if (targets != null)
             {

@@ -31,8 +31,13 @@ public class Minion : Card
         _health -= amount;
         if (_health <= 0)
         {
-            _hasDied = true;
+            Die();
         }
+    }
+
+    public override void Die()
+    {
+        _hasDied = true;
     }
 
     public override void Heal(int amount)

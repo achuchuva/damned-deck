@@ -6,7 +6,8 @@ public enum EffectType
     None,
     Mana,
     Damage,
-    Draw
+    Draw,
+    Destroy
 }
 
 public enum TargetType

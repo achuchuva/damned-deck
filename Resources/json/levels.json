@@ -58,5 +58,34 @@
     "InitialDeckCards": [
       "BoulderfistOgre"
     ]
+  },
+  {
+    "InitialMana": 8,
+    "InitialBoardCards": [
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre"
+    ],
+    "InitialHandCards": [
+      "ManaReservoir",
+      "TwistingNether"
+    ],
+    "InitialDeckCards": []
+  },
+  {
+    "InitialMana": 2,
+    "InitialBoardCards": [
+      "BoulderfistOgre"
+    ],
+    "InitialHandCards": [
+      "ManaReservoir",
+      "Darkbomb",
+      "Darkbomb",
+      "Darkbomb"
+    ],
+    "InitialDeckCards": []
   }
 ]

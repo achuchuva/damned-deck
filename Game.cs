@@ -68,7 +68,7 @@ public class Game
 
     public void PlayCard(Card card, bool isLeft)
     {
-        if (_mana >= card.Cost && Board.MaxCards > Board.CurrentCards.Count)
+        if (_mana >= card.Cost && (Board.MaxCards > Board.CurrentCards.Count || card is Spell))
         {
             Hand.RemoveCard(card);
             if (card is Minion)
@@ -83,48 +83,14 @@ public class Game
                 }
                 _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
             }
+            else
+            {
+                _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
+            }
             _eventManager.OnPlay(card);
             Cleanup();
             _mana -= card.Cost;
         }
-    }
-
-    public bool GetSelection(Card card, TriggerType triggerType, bool isLeft)
-    {
-        _targetingCard = card;
-        _currentTrigger = triggerType;
-        _targets = Board.CurrentCards;
-        bool hasSelectionBeenHandled = false;
-        switch (card.TargetType)
-        {
-            case TargetType.None:
-                _targets = new List<Card>();
-                hasSelectionBeenHandled = true;
-                break;
-            case TargetType.Random:
-                int randomIndex = new Random().Next(0, Board.CurrentCards.Count);
-                _targets = new List<Card>() { Board.CurrentCards[randomIndex] };
-                hasSelectionBeenHandled = true;
-                break;
-            case TargetType.All:
-                _targets = Board.CurrentCards;
-                hasSelectionBeenHandled = true;
-                break;
-            case TargetType.Self:
-                _targets = new List<Card>() { card };
-                hasSelectionBeenHandled = true;
-                break;
-            case TargetType.AllButSelf:
-                _targets = Board.CurrentCards.Except(new List<Card>() { card }).ToList();
-                hasSelectionBeenHandled = true;
-                break;
-        }
-
-        if (_currentTrigger != card.TriggerType)
-        {
-            hasSelectionBeenHandled = true;
-        }
-        return hasSelectionBeenHandled;
     }
 
     public void SetTarget(List<Card> targets)
@@ -161,6 +127,10 @@ public class Game
                 {
                     _eventManager.OnDeath(damagedMinion);
                 }
+                break;
+            case DeathEvent deathEvent:
+                Minion deadMinion = (Minion)deathEvent.DestroyedCard;
+                deadMinion.Die();
                 break;
             case DrawEvent drawEvent:
                 Deck.DrawCard(Hand, 1);
