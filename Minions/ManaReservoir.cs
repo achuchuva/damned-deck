@@ -1,18 +1,19 @@
+// 0 Mana: Ability, take 1 damage and gain 2 mana, 2 health
 using SplashKitSDK;
 
-public class RavagingGhoul : Minion
+public class ManaReservoir : Minion
 {
-    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", EffectType.Damage, TargetType.AllButSelf, TriggerType.OnPlay, SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
+    public ManaReservoir() : base(0, "Mana Reservoir", "Ability: Take 1 damage and gain 2 mana.", EffectType.Mana, TargetType.Self, TriggerType.OnAbility, SplashKit.LoadBitmap("manareservoir", "Images/manareservoir.png"), 2)
     {
 
     }
 
     public override void HandleEvent(Event _event, Game game)
     {
-        if (!(_event is PlayEvent))
+        if (!(_event is AbilityEvent))
             return;
 
-        PlayEvent playEvent = (PlayEvent)_event;
+        AbilityEvent abilityEvent = (AbilityEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
         if (TargetType == TargetType.Chosen)
@@ -20,13 +21,14 @@ public class RavagingGhoul : Minion
             targets = game.Targets;
         }
 
-        if (playEvent.PlayedCard == this)
+        if (abilityEvent.AbilityCard == this)
         {
             if (targets != null)
             {
                 foreach (Card card in targets)
                 {
                     game.EventManager.OnDamage(card, 1);
+                    game.EventManager.OnManaChange(2);
                 }
             }
         }

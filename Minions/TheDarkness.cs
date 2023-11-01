@@ -1,0 +1,1 @@
+// 0 Mana: 60 health, Does nothing.

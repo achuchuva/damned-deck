@@ -40,5 +40,23 @@
     "InitialDeckCards": [
       "BoulderfistOgre"
     ]
+  },
+  {
+    "InitialMana": 6,
+    "InitialBoardCards": [
+      "AcolyteOfPain",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre",
+      "BoulderfistOgre"
+    ],
+    "InitialHandCards": [
+      "KnightCaptain",
+      "ManaReservoir"
+    ],
+    "InitialDeckCards": [
+      "BoulderfistOgre"
+    ]
   }
 ]

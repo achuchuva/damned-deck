@@ -1,8 +1,53 @@
 using System;
 using SplashKitSDK;
 
+public enum EffectType
+{
+    None,
+    Mana,
+    Damage,
+    Draw
+}
+
+public enum TargetType
+{
+    None,
+    Self,
+    Random,
+    All,
+    AllButSelf,
+    Chosen
+}
+
+public enum TriggerType
+{
+    None,
+    OnPlay,
+    OnDeath,
+    OnAbility,
+    OnDamage
+}
+
 public abstract class Card
 {
+    private EffectType _effectType;
+    public EffectType EffectType
+    {
+        get { return _effectType; }
+    }
+
+    private TargetType _targetType;
+    public TargetType TargetType
+    {
+        get { return _targetType; }
+    }
+
+    private TriggerType _triggerType;
+    public TriggerType TriggerType
+    {
+        get { return _triggerType; }
+    }
+
     private int _cost;
     public int Cost
     {
@@ -39,6 +84,18 @@ public abstract class Card
         set { _y = value; }
     }
 
+    private int _width;
+    public int Width
+    {
+        get { return _width; }
+    }
+
+    private int _height;
+    public int Height
+    {
+        get { return _height; }
+    }
+
     private bool _isBeingDragged = false;
     public bool IsBeingDragged
     {
@@ -59,12 +116,17 @@ public abstract class Card
         set { _offsetY = value; }
     }
 
-    public Card(int cost, string name, string desc, Bitmap image)
+    public Card(int cost, string name, string desc, EffectType effectType, TargetType targetType, TriggerType triggerType, Bitmap image)
     {
         _cost = cost;
         _name = name;
         _description = desc;
+        _effectType = effectType;
+        _targetType = targetType;
+        _triggerType = triggerType;
         _image = image;
+        _width = 100;
+        _height = 200;
     }
 
     public virtual void TakeDamage(int amount) { }
@@ -79,18 +141,18 @@ public abstract class Card
 
     public virtual void Draw()
     {
-        SplashKit.FillRectangle(Color.White, X, Y, 100, 200);
+        SplashKit.FillRectangle(Color.White, X, Y, Width, Height);
         Image.Draw(X, Y);
 
-        SplashKit.DrawLine(Color.Black, X, Y + 67, X + 100, Y + 67);
+        SplashKit.DrawLine(Color.Black, X, Y + (Height / 3), X + Width, Y + (Height / 3));
 
-        DrawMultilineText(Name, "Fonts/Roboto-Regular.ttf", Color.Black, (int)X + 5, (int)Y + 72, 100, 12);
+        DrawMultilineText(Name, "Fonts/Roboto-Regular.ttf", Color.Black, (int)X + 5, (int)Y + (Height / 3) + 5, 100, 12);
 
-        SplashKit.DrawLine(Color.Black, X, Y + 100, X + 100, Y + 100);
+        SplashKit.DrawLine(Color.Black, X, Y + (Height / 2), X + Width, Y + (Height / 2));
 
-        DrawMultilineText(Description, "Fonts/Roboto-Thin.ttf", Color.Black, (int)X + 5, (int)Y + 105, 100, 12);
+        DrawMultilineText(Description, "Fonts/Roboto-Thin.ttf", Color.Black, (int)X + 5, (int)Y + (Height / 2) + 5, 100, 12);
 
-        SplashKit.DrawRectangle(Color.Black, X, Y, 100, 200);
+        SplashKit.DrawRectangle(Color.Black, X, Y, Width, Height);
 
         SplashKit.FillCircle(Color.Yellow, X, Y, 10);
         SplashKit.DrawText(Cost.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X - 3, Y - 6);

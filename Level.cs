@@ -77,6 +77,10 @@ public class Level
                 return new BoulderfistOgre();
             case "RavagingGhoul":
                 return new RavagingGhoul();
+            case "KnightCaptain":
+                return new KnightCaptain();
+            case "ManaReservoir":
+                return new ManaReservoir();
             default:
                 throw new Exception("Unknown card ID: " + id);
         }

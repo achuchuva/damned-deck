@@ -20,7 +20,7 @@ public class Minion : Card
         get { return _hasDied; }
     }
 
-    public Minion(int cost, string name, string desc, Bitmap image, int health) : base(cost, name, desc, image)
+    public Minion(int cost, string name, string desc, EffectType effectType, TargetType targetType, TriggerType triggerType, Bitmap image, int health) : base(cost, name, desc, effectType, targetType, triggerType, image)
     {
         _health = health;
         _maxHealth = health;
@@ -53,7 +53,7 @@ public class Minion : Card
     public override void Draw()
     {
         base.Draw();
-        SplashKit.FillCircle(Color.Red, X + 100, Y + 200, 10);
-        SplashKit.DrawText(Health.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X + 97, Y + 194);
+        SplashKit.FillCircle(Color.Red, X + Width, Y + Height, 10);
+        SplashKit.DrawText(Health.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X + Width - 3, Y + Height - 6);
     }
 }

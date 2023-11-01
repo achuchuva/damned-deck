@@ -3,22 +3,18 @@ using SplashKitSDK;
 
 class Arrow
 {
-    private double startX;
-    private double startY;
-
-    public Arrow(double x, double y)
+    public Arrow()
     {
-        startX = x;
-        startY = y;
+
     }
 
-    public void Draw()
+    public void Draw(double startX, double startY, int offsetX, int offsetY)
     {
         double mouseX = SplashKit.MouseX();
         double mouseY = SplashKit.MouseY();
 
         // Draw the arrow body as a red line
-        SplashKit.DrawLine(Color.Red, startX, startY, mouseX, mouseY);
+        SplashKit.DrawLine(Color.Red, startX + offsetX, startY + offsetY, mouseX, mouseY);
 
         // Draw the arrowhead as a red triangle
         SplashKit.FillCircle(Color.Red, mouseX, mouseY, 10);

@@ -8,6 +8,11 @@ public enum PlayerSelection
     Target
 }
 
+interface PlayerSelectionState
+{
+    void Update(Player context);
+}
+
 public class Player
 {
     private PlayerSelection _selection;
@@ -23,6 +28,7 @@ public class Player
     }
 
     private List<Level> _levels;
+    private bool _isLeft;
 
     public Player(List<Level> levels)
     {
@@ -51,6 +57,26 @@ public class Player
             _selection = PlayerSelection.Menu;
         }
 
+        foreach (Card card in level.Game.Board.CurrentCards)
+        {
+            if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsMouseOver())
+            {
+                Selection selection = new Selection(level.Game.Board.CurrentCards);
+                if (selection.GetTargets(card).Count == 0 && card.TriggerType == TriggerType.OnAbility)
+                {
+                    _selection = PlayerSelection.Target;
+                    level.Game.TargetingCard = card;
+                    level.Game.SetTarget(level.Game.Board.CurrentCards);
+                    level.Game.CurrentTrigger = TriggerType.OnAbility;
+                }
+                else
+                {
+                    level.Game.UseAbility(card);
+                }
+                break;
+            }
+        }
+
         foreach (Card card in level.Game.Hand.CurrentCards)
         {
             if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsMouseOver())
@@ -58,8 +84,19 @@ public class Player
                 card.IsBeingDragged = !card.IsBeingDragged;
                 if (SplashKit.MouseY() <= 450)
                 {
-                    bool isLeft = SplashKit.MouseX() <= 600;
-                    level.Game.PlayCard(card, isLeft);
+                    _isLeft = SplashKit.MouseX() <= 600;
+                    Selection selection = new Selection(level.Game.Board.CurrentCards);
+                    if (selection.GetTargets(card).Count == 0 && card.TriggerType == TriggerType.OnPlay)
+                    {
+                        _selection = PlayerSelection.Target;
+                        level.Game.TargetingCard = card;
+                        level.Game.SetTarget(level.Game.Board.CurrentCards);
+                        level.Game.CurrentTrigger = TriggerType.OnPlay;
+                    }
+                    else
+                    {
+                        level.Game.PlayCard(card, _isLeft);
+                    }
                     break;
                 }
             }
@@ -83,8 +120,17 @@ public class Player
         }
     }
 
-    public void UseAbility()
+    public void TargetUpdate(Level level)
     {
-
+        foreach (Card card in level.Game.Targets)
+        {
+            if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsMouseOver())
+            {
+                level.Game.SetTarget(new List<Card> { card });
+                level.Game.SelectTarget(_isLeft);
+                _selection = PlayerSelection.Card;
+                break;
+            }
+        }
     }
 }

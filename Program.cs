@@ -13,6 +13,8 @@ public class Program
             menu.SetUp(levels.Count);
         }
 
+        Arrow targetArrow = new Arrow();
+
         Window window = new Window("Damned Deck", 1200, 900);
         do
         {
@@ -34,6 +36,18 @@ public class Program
                     }
                     break;
                 case PlayerSelection.Target:
+                    if (levels != null)
+                    {
+                        Level level = levels[player.LevelIndex];
+                        level.Draw();
+                        level.Update();
+                        player.TargetUpdate(level);
+                        targetArrow.Draw(
+                            level.Game.TargetingCard.X,
+                            level.Game.TargetingCard.Y,
+                            level.Game.TargetingCard.Width / 2,
+                            level.Game.TargetingCard.Height / 2);
+                    }
                     break;
             }
 

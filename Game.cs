@@ -21,6 +21,27 @@ public class Game
     {
         get { return _deck; }
     }
+
+    private Card? _targetingCard;
+    public Card? TargetingCard
+    {
+        get { return _targetingCard; }
+        set { _targetingCard = value; }
+    }
+
+    private List<Card>? _targets;
+    public List<Card>? Targets
+    {
+        get { return _targets; }
+    }
+
+    private TriggerType _currentTrigger;
+    public TriggerType CurrentTrigger
+    {
+        get { return _currentTrigger; }
+        set { _currentTrigger = value; }
+    }
+
     private int _mana;
     public int Mana
     {
@@ -68,6 +89,67 @@ public class Game
         }
     }
 
+    public bool GetSelection(Card card, TriggerType triggerType, bool isLeft)
+    {
+        _targetingCard = card;
+        _currentTrigger = triggerType;
+        _targets = Board.CurrentCards;
+        bool hasSelectionBeenHandled = false;
+        switch (card.TargetType)
+        {
+            case TargetType.None:
+                _targets = new List<Card>();
+                hasSelectionBeenHandled = true;
+                break;
+            case TargetType.Random:
+                int randomIndex = new Random().Next(0, Board.CurrentCards.Count);
+                _targets = new List<Card>() { Board.CurrentCards[randomIndex] };
+                hasSelectionBeenHandled = true;
+                break;
+            case TargetType.All:
+                _targets = Board.CurrentCards;
+                hasSelectionBeenHandled = true;
+                break;
+            case TargetType.Self:
+                _targets = new List<Card>() { card };
+                hasSelectionBeenHandled = true;
+                break;
+            case TargetType.AllButSelf:
+                _targets = Board.CurrentCards.Except(new List<Card>() { card }).ToList();
+                hasSelectionBeenHandled = true;
+                break;
+        }
+
+        if (_currentTrigger != card.TriggerType)
+        {
+            hasSelectionBeenHandled = true;
+        }
+        return hasSelectionBeenHandled;
+    }
+
+    public void SetTarget(List<Card> targets)
+    {
+        _targets = targets;
+    }
+
+    public void SelectTarget(bool isLeft)
+    {
+        if (_currentTrigger == TriggerType.OnPlay)
+        {
+            PlayCard(_targetingCard, isLeft);
+        }
+        else if (_currentTrigger == TriggerType.OnAbility)
+        {
+            UseAbility(_targetingCard);
+        }
+    }
+
+    public void UseAbility(Card card)
+    {
+        _eventManager.OnAbility(card);
+        Cleanup();
+    }
+
     public void HandleEvent(Event _event)
     {
         switch (_event)
@@ -82,6 +164,9 @@ public class Game
                 break;
             case DrawEvent drawEvent:
                 Deck.DrawCard(Hand, 1);
+                break;
+            case ManaEvent manaEvent:
+                _mana += manaEvent.Amount;
                 break;
             default:
                 break;

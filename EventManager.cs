@@ -51,6 +51,16 @@ public class EventManager
         TriggerSubscribers(new SummonEvent(summonedCards));
     }
 
+    public void OnAbility(Card abilityCard)
+    {
+        TriggerSubscribers(new AbilityEvent(abilityCard));
+    }
+
+    public void OnManaChange(int amount)
+    {
+        TriggerSubscribers(new ManaEvent(amount));
+    }
+
     public void TriggerSubscribers(Event _event)
     {
         foreach (Action<Event> subscriber in Subscribers)
