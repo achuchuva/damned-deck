@@ -8,7 +8,7 @@ public enum PlayerSelection
     Target
 }
 
-interface PlayerSelectionState
+interface IPlayerSelectionState
 {
     void Update(Player context);
 }
@@ -62,12 +62,12 @@ public class Player
             if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsMouseOver())
             {
                 Selection selection = new Selection(level.Game.Board.CurrentCards);
-                if (selection.GetTargets(card).Count == 0 && card.TriggerType == TriggerType.OnAbility)
+                if (selection.GetTargets(card).Count == 0 && card.Trigger == Trigger.OnAbility)
                 {
                     _selection = PlayerSelection.Target;
                     level.Game.TargetingCard = card;
                     level.Game.SetTarget(level.Game.Board.CurrentCards);
-                    level.Game.CurrentTrigger = TriggerType.OnAbility;
+                    level.Game.CurrentTrigger = Trigger.OnAbility;
                 }
                 else
                 {
@@ -86,12 +86,12 @@ public class Player
                 {
                     _isLeft = SplashKit.MouseX() <= 600;
                     Selection selection = new Selection(level.Game.Board.CurrentCards);
-                    if (selection.GetTargets(card).Count == 0 && card.TriggerType == TriggerType.OnPlay)
+                    if (selection.GetTargets(card).Count == 0 && card.Trigger == Trigger.OnPlay)
                     {
                         _selection = PlayerSelection.Target;
                         level.Game.TargetingCard = card;
                         level.Game.SetTarget(level.Game.Board.CurrentCards);
-                        level.Game.CurrentTrigger = TriggerType.OnPlay;
+                        level.Game.CurrentTrigger = Trigger.OnPlay;
                     }
                     else
                     {
@@ -131,6 +131,11 @@ public class Player
                 _selection = PlayerSelection.Card;
                 break;
             }
+        }
+
+        if (SplashKit.KeyDown(KeyCode.EscapeKey))
+        {
+            _selection = PlayerSelection.Card;
         }
     }
 }

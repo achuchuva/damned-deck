@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class Darkbomb : Spell
 {
-    public Darkbomb() : base(2, "Darkbomb", "Deal 3 damage.", EffectType.Damage, TargetType.Chosen, SplashKit.LoadBitmap("darkbomb", "Images/darkbomb.png"))
+    public Darkbomb() : base(2, "Darkbomb", "Deal 3 damage.", Effect.Damage, Target.Chosen, SplashKit.LoadBitmap("darkbomb", "Images/darkbomb.png"))
     {
 
     }
@@ -15,7 +15,7 @@ public class Darkbomb : Spell
         PlayEvent playEvent = (PlayEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

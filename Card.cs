@@ -1,50 +1,22 @@
 using System;
 using SplashKitSDK;
 
-public enum EffectType
-{
-    None,
-    Mana,
-    Damage,
-    Draw,
-    Destroy
-}
-
-public enum TargetType
-{
-    None,
-    Self,
-    Random,
-    All,
-    AllButSelf,
-    Chosen
-}
-
-public enum TriggerType
-{
-    None,
-    OnPlay,
-    OnDeath,
-    OnAbility,
-    OnDamage
-}
-
 public abstract class Card
 {
-    private EffectType _effectType;
-    public EffectType EffectType
+    private Effect _effectType;
+    public Effect EffectType
     {
         get { return _effectType; }
     }
 
-    private TargetType _targetType;
-    public TargetType TargetType
+    private Target _targetType;
+    public Target TargetType
     {
         get { return _targetType; }
     }
 
-    private TriggerType _triggerType;
-    public TriggerType TriggerType
+    private Trigger _triggerType;
+    public Trigger Trigger
     {
         get { return _triggerType; }
     }
@@ -117,7 +89,7 @@ public abstract class Card
         set { _offsetY = value; }
     }
 
-    public Card(int cost, string name, string desc, EffectType effectType, TargetType targetType, TriggerType triggerType, Bitmap image)
+    public Card(int cost, string name, string desc, Effect effectType, Target targetType, Trigger triggerType, Bitmap image)
     {
         _cost = cost;
         _name = name;

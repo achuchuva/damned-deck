@@ -20,7 +20,7 @@ public class Minion : Card
         get { return _hasDied; }
     }
 
-    public Minion(int cost, string name, string desc, EffectType effectType, TargetType targetType, TriggerType triggerType, Bitmap image, int health) : base(cost, name, desc, effectType, targetType, triggerType, image)
+    public Minion(int cost, string name, string desc, Effect effectType, Target targetType, Trigger triggerType, Bitmap image, int health) : base(cost, name, desc, effectType, targetType, triggerType, image)
     {
         _health = health;
         _maxHealth = health;

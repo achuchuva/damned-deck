@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class KnightCaptain : Minion
 {
-    public KnightCaptain() : base(3, "Knight-Captain", "Ability: Deal 3 damage.", EffectType.Damage, TargetType.Chosen, TriggerType.OnAbility, SplashKit.LoadBitmap("knightcaptain", "Images/knightcaptain.png"), 3)
+    public KnightCaptain() : base(3, "Knight-Captain", "Ability: Deal 3 damage.", Effect.Damage, Target.Chosen, Trigger.OnAbility, SplashKit.LoadBitmap("knightcaptain", "Images/knightcaptain.png"), 3)
     {
 
     }
@@ -15,7 +15,7 @@ public class KnightCaptain : Minion
         AbilityEvent abilityEvent = (AbilityEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

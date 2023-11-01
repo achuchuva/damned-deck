@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class Anomalus : Minion
 {
-    public Anomalus() : base(8, "Anomalus", "Deathrattle: Deal 8 damage to all minions.", EffectType.Damage, TargetType.AllButSelf, TriggerType.OnDeath, SplashKit.LoadBitmap("anomalus", "Images/anomalus.png"), 2)
+    public Anomalus() : base(8, "Anomalus", "Deathrattle: Deal 8 damage to all minions.", Effect.Damage, Target.AllButSelf, Trigger.OnDeath, SplashKit.LoadBitmap("anomalus", "Images/anomalus.png"), 2)
     {
 
     }
@@ -15,7 +15,7 @@ public class Anomalus : Minion
         DeathEvent deathEvent = (DeathEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

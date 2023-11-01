@@ -3,7 +3,6 @@ using SplashKitSDK;
 
 public class Level
 {
-    private EventManager _manager;
     private Game _game;
     public Game Game
     {

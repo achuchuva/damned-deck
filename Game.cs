@@ -35,8 +35,8 @@ public class Game
         get { return _targets; }
     }
 
-    private TriggerType _currentTrigger;
-    public TriggerType CurrentTrigger
+    private Trigger _currentTrigger;
+    public Trigger CurrentTrigger
     {
         get { return _currentTrigger; }
         set { _currentTrigger = value; }
@@ -60,7 +60,7 @@ public class Game
     {
         _eventManager = new EventManager();
         _eventManager.AddSubscriber(e => this.HandleEvent(e));
-        _board = new Board(_eventManager);
+        _board = new Board();
         _hand = new Hand();
         _deck = new Deck();
         _mana = 0;
@@ -68,25 +68,14 @@ public class Game
 
     public void PlayCard(Card card, bool isLeft)
     {
-        if (_mana >= card.Cost && (Board.MaxCards > Board.CurrentCards.Count || card is Spell))
+        if (_mana >= card.Cost && (Board.MAX_CARDS > Board.CurrentCards.Count || card is Spell))
         {
             Hand.RemoveCard(card);
             if (card is Minion)
             {
-                if (isLeft)
-                {
-                    Board.AddCard(card, 0);
-                }
-                else
-                {
-                    Board.AddCard(card, Board.CurrentCards.Count);
-                }
-                _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
+                Board.AddCard(card, isLeft ? 0 : Board.CurrentCards.Count);
             }
-            else
-            {
-                _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
-            }
+            _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
             _eventManager.OnPlay(card);
             Cleanup();
             _mana -= card.Cost;
@@ -100,11 +89,11 @@ public class Game
 
     public void SelectTarget(bool isLeft)
     {
-        if (_currentTrigger == TriggerType.OnPlay)
+        if (_currentTrigger == Trigger.OnPlay)
         {
             PlayCard(_targetingCard, isLeft);
         }
-        else if (_currentTrigger == TriggerType.OnAbility)
+        else if (_currentTrigger == Trigger.OnAbility)
         {
             UseAbility(_targetingCard);
         }
@@ -133,7 +122,7 @@ public class Game
                 deadMinion.Die();
                 break;
             case DrawEvent drawEvent:
-                Deck.DrawCard(Hand, 1);
+                Deck.DrawCard(Hand, drawEvent.Amount);
                 break;
             case ManaEvent manaEvent:
                 _mana += manaEvent.Amount;

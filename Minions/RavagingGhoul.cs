@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class RavagingGhoul : Minion
 {
-    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", EffectType.Damage, TargetType.AllButSelf, TriggerType.OnPlay, SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
+    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", Effect.Damage, Target.AllButSelf, Trigger.OnPlay, SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
     {
 
     }
@@ -15,7 +15,7 @@ public class RavagingGhoul : Minion
         PlayEvent playEvent = (PlayEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

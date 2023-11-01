@@ -3,22 +3,16 @@ using SplashKitSDK;
 
 public class Board
 {
-    private int _maxCards = 7;
-    public int MaxCards
-    {
-        get { return _maxCards; }
-    }
-    private EventManager _eventManager;
+    public const int MAX_CARDS = 7;
     private List<Card> _currentCards;
     public List<Card> CurrentCards
     {
         get { return _currentCards; }
     }
 
-    public Board(EventManager eventManager)
+    public Board()
     {
         _currentCards = new List<Card>();
-        _eventManager = eventManager;
     }
 
     public void AddCard(Card card, int index)

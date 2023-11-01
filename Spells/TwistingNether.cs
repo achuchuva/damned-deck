@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class TwistingNether : Spell
 {
-    public TwistingNether() : base(8, "Twisting Nether", "Destroy all minions.", EffectType.Destroy, TargetType.All, SplashKit.LoadBitmap("twistingnether", "Images/twistingnether.png"))
+    public TwistingNether() : base(8, "Twisting Nether", "Destroy all minions.", Effect.Destroy, Target.All, SplashKit.LoadBitmap("twistingnether", "Images/twistingnether.png"))
     {
 
     }
@@ -15,7 +15,7 @@ public class TwistingNether : Spell
         PlayEvent playEvent = (PlayEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

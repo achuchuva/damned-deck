@@ -5,7 +5,7 @@ public class Program
 {
     public static void Main()
     {
-        List<Level>? levels = GetLevels();
+        List<Level>? levels = LoadLevels();
         Player player = new Player(levels);
         Menu menu = new Menu();
         if (levels != null)
@@ -55,9 +55,9 @@ public class Program
         } while (!window.CloseRequested);
     }
 
-    public static List<Level>? GetLevels()
+    public static List<Level>? LoadLevels()
     {
-        string jsonString = Json.ToJsonString(SplashKit.JsonFromFile("levels.json"));
+        string jsonString = File.ReadAllText("Resources/json/levels.json");
         return JsonSerializer.Deserialize<List<Level>>(jsonString);
     }
 }

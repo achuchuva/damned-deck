@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 public class AcolyteOfPain : Minion
 {
-    public AcolyteOfPain() : base(3, "Acolyte of Pain", "Whenever this minion takes damage, draw a card.", EffectType.Draw, TargetType.Self, TriggerType.OnDamage, SplashKit.LoadBitmap("acolyteofpain", "Images/acolyteofpain.png"), 3)
+    public AcolyteOfPain() : base(3, "Acolyte of Pain", "Whenever this minion takes damage, draw a card.", Effect.Draw, Target.Self, Trigger.OnDamage, SplashKit.LoadBitmap("acolyteofpain", "Images/acolyteofpain.png"), 3)
     {
 
     }
@@ -15,7 +15,7 @@ public class AcolyteOfPain : Minion
         DamageEvent damageEvent = (DamageEvent)_event;
 
         List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == TargetType.Chosen)
+        if (TargetType == Target.Chosen)
         {
             targets = game.Targets;
         }

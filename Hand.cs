@@ -3,12 +3,7 @@ using SplashKitSDK;
 
 public class Hand
 {
-    private int _maxCards = 10;
-    public int MaxCards
-    {
-        get { return _maxCards; }
-    }
-
+    public const int MAX_CARDS = 10;
     private List<Card> _currentCards;
     public List<Card> CurrentCards
     {
