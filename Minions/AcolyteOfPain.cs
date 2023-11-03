@@ -14,15 +14,14 @@ public class AcolyteOfPain : Minion
 
         DamageEvent damageEvent = (DamageEvent)_event;
 
-        List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == Target.Chosen)
-        {
-            targets = game.Targets;
-        }
-
         if (damageEvent.DamagedCard == this)
         {
-            game.EventManager.OnDraw(1);
+            new Selection(game.Board.CurrentCards).GetTargets(this, game);
         }
+    }
+
+    public override void HandleEffect(List<Card> targets, Game game)
+    {
+        game.EventManager.OnDraw(1);
     }
 }

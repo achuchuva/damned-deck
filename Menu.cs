@@ -9,9 +9,21 @@ public class Menu
         get { return _levelButtons; }
     }
 
-    public Menu()
+    private List<Level>? _levels;
+
+    public Menu(List<Level> levels)
     {
         _levelButtons = new Dictionary<int, Button>();
+        _levels = levels;
+        if (_levels != null)
+        {
+            SetUp(_levels.Count);
+        }
+    }
+
+    public Level GetLevel(int index)
+    {
+        return _levels[index];
     }
 
     public void SetUp(int levelCount)
@@ -27,18 +39,5 @@ public class Menu
             _levelButtons.Add(i, new Button(rect, SplashKit.LoadBitmap("button", "Images/button.png"), ButtonType.Start));
             startX += 150;
         }
-    }
-
-    public void Draw()
-    {
-        Bitmap menuImage = SplashKit.LoadBitmap("menu", "Images/menu.png");
-        SplashKit.DrawBitmap(menuImage, 0, 0);
-        SplashKit.FreeBitmap(menuImage);
-
-        for (int i = 0; i < _levelButtons.Count; i++)
-        {
-            _levelButtons[i].Draw((i + 1).ToString());
-        }
-
     }
 }

@@ -38,10 +38,11 @@ public class Level
         _buttons.Add(new Button(rect, SplashKit.LoadBitmap("restart", "Images/restart.png"), ButtonType.Restart));
     }
 
-    public void SetUp()
+    public void SetUp(Player player)
     {
         _game.LevelComplete = false;
         _game.Mana = InitialMana;
+        _game.Player = player;
 
         _game.Board.CurrentCards.Clear();
         foreach (string id in InitialBoardCards)
@@ -87,24 +88,6 @@ public class Level
             default:
                 throw new Exception("Unknown card ID: " + id);
         }
-    }
-
-    public void Draw()
-    {
-        Bitmap levelImage = SplashKit.LoadBitmap("level", "Images/level.png");
-        SplashKit.DrawBitmap(levelImage, 0, 0);
-        SplashKit.FreeBitmap(levelImage);
-
-        SplashKit.DrawText(_game.Mana.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 50, 560, 15);
-
-        foreach (Button button in _buttons)
-        {
-            button.Draw();
-        }
-
-        _game.Board.Draw(600);
-        _game.Hand.Draw(700);
-        _game.Deck.Draw();
     }
 
     public void Update()

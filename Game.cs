@@ -6,6 +6,8 @@ public class Game
         get { return _eventManager; }
     }
 
+    public Player? Player { get; set; }
+
     private Board _board;
     public Board Board
     {
@@ -29,11 +31,7 @@ public class Game
         set { _targetingCard = value; }
     }
 
-    private List<Card>? _targets;
-    public List<Card>? Targets
-    {
-        get { return _targets; }
-    }
+    public List<Card>? Targets { get; set; }
 
     private Trigger _currentTrigger;
     public Trigger CurrentTrigger
@@ -76,31 +74,16 @@ public class Game
                 Board.AddCard(card, isLeft ? 0 : Board.CurrentCards.Count);
             }
             _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
+            _targetingCard = card;
             _eventManager.OnPlay(card);
             Cleanup();
             _mana -= card.Cost;
         }
     }
 
-    public void SetTarget(List<Card> targets)
-    {
-        _targets = targets;
-    }
-
-    public void SelectTarget(bool isLeft)
-    {
-        if (_currentTrigger == Trigger.OnPlay)
-        {
-            PlayCard(_targetingCard, isLeft);
-        }
-        else if (_currentTrigger == Trigger.OnAbility)
-        {
-            UseAbility(_targetingCard);
-        }
-    }
-
     public void UseAbility(Card card)
     {
+        _targetingCard = card;
         _eventManager.OnAbility(card);
         Cleanup();
     }

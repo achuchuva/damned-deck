@@ -76,12 +76,14 @@
     "InitialDeckCards": []
   },
   {
-    "InitialMana": 2,
+    "InitialMana": 10,
     "InitialBoardCards": [
       "BoulderfistOgre"
     ],
     "InitialHandCards": [
       "ManaReservoir",
+      "Darkbomb",
+      "Darkbomb",
       "Darkbomb",
       "Darkbomb",
       "Darkbomb"

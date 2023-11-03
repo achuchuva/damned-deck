@@ -25,23 +25,6 @@ public class Board
         _currentCards.Remove(card);
     }
 
-    public void Draw(int centreX)
-    {
-        int totalWidth = CurrentCards.Count * 125;
-        int startX = centreX - totalWidth / 2;
-
-        foreach (Card card in CurrentCards)
-        {
-            if (!card.IsBeingDragged)
-            {
-                card.X = startX;
-                card.Y = 150;
-            }
-            card.Draw();
-            startX += 125;
-        }
-    }
-
     public void Update()
     {
         foreach (Card card in CurrentCards)

@@ -45,13 +45,4 @@ public class Deck
     {
 
     }
-
-    public void Draw()
-    {
-        if (CurrentCards.Count > 0)
-        {
-            SplashKit.FillRectangle(Color.White, 1115, 400, 35, 150);
-        }
-    }
-
 }

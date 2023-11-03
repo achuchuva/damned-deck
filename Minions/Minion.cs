@@ -55,10 +55,5 @@ public class Minion : Card
 
     public override void HandleEvent(Event _event, Game game) { }
 
-    public override void Draw()
-    {
-        base.Draw();
-        SplashKit.FillCircle(Color.Red, X + Width, Y + Height, 10);
-        SplashKit.DrawText(Health.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X + Width - 3, Y + Height - 6);
-    }
+    public override void HandleEffect(List<Card> targets, Game game) { }
 }

@@ -6,14 +6,9 @@ public class Program
     public static void Main()
     {
         List<Level>? levels = LoadLevels();
-        Player player = new Player(levels);
-        Menu menu = new Menu();
-        if (levels != null)
-        {
-            menu.SetUp(levels.Count);
-        }
-
-        Arrow targetArrow = new Arrow();
+        Menu menu = new Menu(levels);
+        Player player = new Player();
+        View view = new View();
 
         Window window = new Window("Damned Deck", 1200, 900);
         do
@@ -21,38 +16,20 @@ public class Program
             SplashKit.ProcessEvents();
             SplashKit.ClearScreen();
 
-            switch (player.Selection)
+            player.Update(player.CurrentLevel, menu);
+            if (player.CurrentLevel == null)
             {
-                case PlayerSelection.Menu:
-                    menu.Draw();
-                    player.MenuUpdate(menu);
-                    break;
-                case PlayerSelection.Card:
-                    if (levels != null)
-                    {
-                        levels[player.LevelIndex].Draw();
-                        levels[player.LevelIndex].Update();
-                        player.LevelUpdate(levels[player.LevelIndex]);
-                    }
-                    break;
-                case PlayerSelection.Target:
-                    if (levels != null)
-                    {
-                        Level level = levels[player.LevelIndex];
-                        level.Draw();
-                        level.Update();
-                        player.TargetUpdate(level);
-                        targetArrow.Draw(
-                            level.Game.TargetingCard.X,
-                            level.Game.TargetingCard.Y,
-                            level.Game.TargetingCard.Width / 2,
-                            level.Game.TargetingCard.Height / 2);
-                    }
-                    break;
+                view.DrawMenu(menu);
+            }
+            else
+            {
+                view.DrawLevel(player.CurrentLevel);
+                player.CurrentLevel.Update();
             }
 
             SplashKit.RefreshScreen();
         } while (!window.CloseRequested);
+
     }
 
     public static List<Level>? LoadLevels()

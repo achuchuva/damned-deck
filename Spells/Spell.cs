@@ -8,8 +8,8 @@ public class Spell : Card
     
     }
 
-    public override void HandleEvent(Event e, Game game)
-    {
+    public override void HandleEvent(Event e, Game game) { }
 
-    }
+    public override void HandleEffect(List<Card> targets, Game game) { }
+
 }

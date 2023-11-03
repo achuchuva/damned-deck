@@ -10,7 +10,15 @@ public enum ButtonType
 public class Button
 {
     private Rectangle _rectangle;
+    public Rectangle Rectangle
+    {
+        get { return _rectangle; }
+    }
     private Bitmap _image;
+    public Bitmap Image 
+    {
+        get { return _image; }
+    }
     private ButtonType _type;
     public ButtonType Type
     {
@@ -22,12 +30,6 @@ public class Button
         _rectangle = rectangle;
         _image = image;
         _type = type;
-    }
-
-    public void Draw(string text = "")
-    {
-        SplashKit.DrawBitmap(_image, _rectangle.X, _rectangle.Y);
-        SplashKit.DrawText(text, Color.Black, "Fonts/aptos-black.ttf", 75, _rectangle.X + 25, _rectangle.Y + 5);
     }
 
     public bool IsMouseOver()

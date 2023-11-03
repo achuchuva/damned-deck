@@ -112,63 +112,7 @@ public abstract class Card
 
     public abstract void HandleEvent(Event e, Game game);
 
-    public virtual void Draw()
-    {
-        SplashKit.FillRectangle(Color.White, X, Y, Width, Height);
-        Image.Draw(X, Y);
-
-        SplashKit.DrawLine(Color.Black, X, Y + (Height / 3), X + Width, Y + (Height / 3));
-
-        DrawMultilineText(Name, "Fonts/Roboto-Regular.ttf", Color.Black, (int)X + 5, (int)Y + (Height / 3) + 5, 100, 12);
-
-        SplashKit.DrawLine(Color.Black, X, Y + (Height / 2), X + Width, Y + (Height / 2));
-
-        DrawMultilineText(Description, "Fonts/Roboto-Thin.ttf", Color.Black, (int)X + 5, (int)Y + (Height / 2) + 5, 100, 12);
-
-        SplashKit.DrawRectangle(Color.Black, X, Y, Width, Height);
-
-        SplashKit.FillCircle(Color.Yellow, X, Y, 10);
-        SplashKit.DrawText(Cost.ToString(), Color.Black, "Fonts/Roboto-Regular.ttf", 12, X - 3, Y - 6);
-    }
-
-    private void DrawMultilineText(string text, string font, Color color, int x, int y, int maxWidth, int lineHeight)
-    {
-        List<string> lines = SplitTextIntoLines(text, maxWidth);
-        int lineY = y;
-
-        foreach (string line in lines)
-        {
-            SplashKit.DrawText(line, color, font, 12, x, lineY);
-            lineY += lineHeight;
-        }
-    }
-
-    private List<string> SplitTextIntoLines(string text, int maxWidth)
-    {
-        List<string> lines = new List<string>();
-        string[] words = text.Split(' ');
-        string currentLine = "";
-
-        foreach (string word in words)
-        {
-            if (SplashKit.TextWidth(currentLine + " " + word, "Fonts/Roboto-Thin.ttf", 15) <= maxWidth)
-            {
-                currentLine += (currentLine == "" ? "" : " ") + word;
-            }
-            else
-            {
-                lines.Add(currentLine);
-                currentLine = word;
-            }
-        }
-
-        if (!string.IsNullOrEmpty(currentLine))
-        {
-            lines.Add(currentLine);
-        }
-
-        return lines;
-    }
+    public abstract void HandleEffect(List<Card> targets, Game game);
 
     public bool IsMouseOver()
     {

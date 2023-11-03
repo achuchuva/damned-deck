@@ -15,24 +15,21 @@ public class ManaReservoir : Minion
 
         AbilityEvent abilityEvent = (AbilityEvent)_event;
 
-        List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == Target.Chosen)
-        {
-            targets = game.Targets;
-        }
-
         if (abilityEvent.AbilityCard == this)
         {
-            if (targets != null)
+            new Selection(game.Board.CurrentCards).GetTargets(this, game);
+        }
+    }
+
+    public override void HandleEffect(List<Card> targets, Game game)
+    {
+        if (targets != null)
+        {
+            foreach (Card card in targets)
             {
-                foreach (Card card in targets)
-                {
-                    game.EventManager.OnDamage(card, 1);
-                    game.EventManager.OnManaChange(2);
-                }
+                game.EventManager.OnDamage(card, 1);
+                game.EventManager.OnManaChange(2);
             }
         }
-
-        base.HandleEvent(_event, game);
     }
 }

@@ -14,23 +14,20 @@ public class Darkbomb : Spell
 
         PlayEvent playEvent = (PlayEvent)_event;
 
-        List<Card> targets = new Selection(game.Board.CurrentCards).GetTargets(this);
-        if (TargetType == Target.Chosen)
-        {
-            targets = game.Targets;
-        }
-
         if (playEvent.PlayedCard == this)
         {
-            if (targets != null)
+            new Selection(game.Board.CurrentCards).GetTargets(this, game);
+        }
+    }
+
+    public override void HandleEffect(List<Card> targets, Game game)
+    {
+        if (targets != null)
+        {
+            foreach (Card card in targets)
             {
-                foreach (Card card in targets)
-                {
-                    game.EventManager.OnDamage(card, 3);
-                }
+                game.EventManager.OnDamage(card, 3);
             }
         }
-
-        base.HandleEvent(_event, game);
     }
 }
