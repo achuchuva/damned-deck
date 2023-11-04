@@ -2,11 +2,9 @@ using SplashKitSDK;
 
 public class Selection
 {
-    private List<Card> _validTargets;
-
-    public Selection(List<Card> allCards)
+    public Selection()
     {
-        _validTargets = allCards;
+
     }
 
     public void GetTargets(Card card, Game game)
@@ -17,35 +15,47 @@ public class Selection
                 card.HandleEffect(new List<Card>(), game);
                 break;
             case Target.Random:
-                card.HandleEffect(SelectRandomCards(_validTargets, 1), game);
+                card.HandleEffect(SelectRandomCards(game.Board.CurrentCards, 1), game);
                 break;
             case Target.All:
-                card.HandleEffect(_validTargets, game);
+                card.HandleEffect(game.Board.CurrentCards, game);
                 break;
             case Target.Self:
                 card.HandleEffect(new List<Card>() { card }, game);
                 break;
             case Target.AllButSelf:
-                card.HandleEffect(_validTargets.Except(new List<Card>() { card }).ToList(), game);
+                card.HandleEffect(game.Board.CurrentCards.Except(new List<Card>() { card }).ToList(), game);
                 break;
             case Target.Chosen:
-                if (_validTargets.Count > 0)
+                switch (card.EffectType)
                 {
-                    if (card.EffectType == Effect.Discover)
-                    {
-                        game.Targets = SelectRandomCards(_validTargets, 3);
+                    case Effect.Discover:
+                        game.Targets = SelectRandomCards(Program.AllCards, 3);
                         game.Player.SetSelectionState(new DiscoverSelectionState());
-                    }
-                    else if (card.EffectType == Effect.ChooseOne)
-                    {
-                        game.Targets = _validTargets;
+                        break;
+                    case Effect.DiscoverMinion:
+                        game.Targets = SelectRandomCards(Program.AllCards.Where(c => c is Minion).ToList(), 3);
                         game.Player.SetSelectionState(new DiscoverSelectionState());
-                    }
-                    else
-                    {
-                        game.Targets = _validTargets;
-                        game.Player.SetSelectionState(new TargetSelectionState());
-                    }
+                        break;
+                    case Effect.DiscoverSpell:
+                        game.Targets = SelectRandomCards(Program.AllCards.Where(c => c is Spell).ToList(), 3);
+                        game.Player.SetSelectionState(new DiscoverSelectionState());
+                        break;
+                    case Effect.ChooseOneRavenIdol:
+                        game.Targets = new List<Card> { Program.GetCard("Awakened", true), Program.GetCard("Break Free", true) };
+                        game.Player.SetSelectionState(new DiscoverSelectionState());
+                        break;
+                    case Effect.ChooseOneWrath:
+                        game.Targets = new List<Card> { Program.GetCard("Solar Wrath", true), Program.GetCard("Nature's Wrath", true) };
+                        game.Player.SetSelectionState(new DiscoverSelectionState());
+                        break;
+                    default:
+                        if (game.Board.CurrentCards.Count > 0)
+                        {
+                            game.Targets = game.Board.CurrentCards;
+                            game.Player.SetSelectionState(new TargetSelectionState());
+                        }
+                        break;
                 }
                 break;
             default:
@@ -58,7 +68,7 @@ public class Selection
     {
         if (count >= cards.Count)
         {
-            return cards; 
+            return cards;
         }
 
         Random random = new Random();

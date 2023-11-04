@@ -4,6 +4,7 @@ public enum Target
     Self,
     Random,
     All,
+    AllMinions,
     AllButSelf,
     Chosen
 }

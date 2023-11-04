@@ -3,6 +3,12 @@ using SplashKitSDK;
 
 public abstract class Card
 {
+    private bool _token;
+    public bool Token
+    {
+        get { return _token; }
+    }
+
     private Effect _effectType;
     public Effect EffectType
     {
@@ -15,10 +21,16 @@ public abstract class Card
         get { return _targetType; }
     }
 
-    private Trigger _triggerType;
-    public Trigger TriggerType
+    private EventType _triggerType;
+    public EventType TriggerType
     {
         get { return _triggerType; }
+    }
+
+    private List<Event> _effectEvents;
+    public List<Event> EffectEvents
+    {
+        get { return _effectEvents; }
     }
 
     private int _cost;
@@ -95,7 +107,7 @@ public abstract class Card
         set { _offsetY = value; }
     }
 
-    public Card(int cost, string name, string desc, Effect effectType, Target targetType, Trigger triggerType, Bitmap image)
+    public Card(int cost, string name, string desc, Effect effectType, Target targetType, EventType triggerType, List<Event> effectEvents, Bitmap image, bool token)
     {
         _cost = cost;
         _name = name;
@@ -106,6 +118,8 @@ public abstract class Card
         _image = image;
         _width = 100;
         _height = 200;
+        _effectEvents = effectEvents;
+        _token = token;
     }
 
     public virtual void TakeDamage(int amount) { }
@@ -116,7 +130,20 @@ public abstract class Card
 
     public abstract void HandleEvent(Event e, Game game);
 
-    public abstract void HandleEffect(List<Card> targets, Game game);
+    public void HandleEffect(List<Card> targets, Game game)
+    {
+        if (targets != null)
+        {
+            foreach (Card card in targets)
+            {
+                foreach (Event _event in EffectEvents)
+                {
+                    Event e = new Event(_event.EventType, card, _event.Amount);
+                    game.EventManager.TriggerSubscribers(e);
+                }
+            }
+        }
+    }
 
     public abstract Card Clone();
 

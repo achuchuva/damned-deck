@@ -37,8 +37,8 @@ public class Game
     private List<Card> _deadCards = new List<Card>();
     private List<Card> _summonedCards = new List<Card>();
 
-    private Trigger _currentTrigger;
-    public Trigger CurrentTrigger
+    private EventType _currentTrigger;
+    public EventType CurrentTrigger
     {
         get { return _currentTrigger; }
         set { _currentTrigger = value; }
@@ -77,10 +77,10 @@ public class Game
             if (card is Minion)
             {
                 _isLeft = isLeft;
-                _eventManager.OnSummon(card, isLeft ? 0 : Board.CurrentCards.Count);
+                _eventManager.TriggerSubscribers(new Event(EventType.Summon, card));
             }
             _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
-            _eventManager.OnPlay(card);
+            _eventManager.TriggerSubscribers(new Event(EventType.Play, card));
             Cleanup();
             _mana -= card.Cost;
         }
@@ -89,49 +89,56 @@ public class Game
     public void UseAbility(Card card)
     {
         _targetingCard = card;
-        _eventManager.OnAbility(card);
+        _eventManager.TriggerSubscribers(new Event(EventType.Ability, card));
         Cleanup();
     }
 
     public void HandleEvent(Event _event)
     {
-        switch (_event)
+        switch (_event.EventType)
         {
-            case DamageEvent damageEvent:
-                Minion damagedMinion = (Minion)damageEvent.DamagedCard;
-                damagedMinion.TakeDamage(damageEvent.Amount);
+            case EventType.Damage:
+                Minion damagedMinion = (Minion)_event.AffectedCard;
+                damagedMinion.TakeDamage(_event.Amount);
                 if (damagedMinion.HasDied)
                 {
-                    _eventManager.OnDeath(damagedMinion);
+                    _eventManager.TriggerSubscribers(new Event(EventType.Death, damagedMinion));
                 }
                 break;
-            case DeathEvent deathEvent:
-                _deadCards.Add(deathEvent.DestroyedCard);
+            case EventType.Death:
+                _deadCards.Add(_event.AffectedCard);
                 break;
-            case DrawEvent drawEvent:
-                Deck.DrawCard(Hand, drawEvent.Amount);
+            case EventType.Draw:
+                Deck.DrawCard(Hand, _event.Amount);
                 break;
-            case ManaEvent manaEvent:
-                _mana += manaEvent.Amount;
+            case EventType.Mana:
+                _mana += _event.Amount;
                 break;
-            case DiscoverEvent discoverEvent:
-                Hand.AddCard(discoverEvent.DiscoveredCard);
+            case EventType.Discover:
+                Hand.AddCard(_event.AffectedCard);
                 break;
-            case HandEvent handEvent:
-                Hand.AddCard(handEvent.AddedCard);
+            case EventType.Hand:
+                Hand.AddCard(_event.AffectedCard);
                 break;
-            case ChooseOneEvent chooseOneEvent:
-                _targetingCard = chooseOneEvent.ChosenCard;
-                chooseOneEvent.ChosenCard.HandleEvent(new PlayEvent(chooseOneEvent.ChosenCard), this);
+            case EventType.ChooseOne:
+                _targetingCard = _event.AffectedCard;
+                _event.AffectedCard.HandleEvent(new Event(EventType.Play, _event.AffectedCard), this);
                 break;
-            case HealthEvent healthEvent:
-                Minion healedCard = (Minion)healthEvent.HealthCard;
-                healedCard.AddHealth(healthEvent.Amount);
+            case EventType.Health:
+                Minion healedCard = (Minion)_event.AffectedCard;
+                healedCard.AddHealth(_event.Amount);
                 break;
-            case SummonEvent summonEvent:
+            case EventType.Summon:
                 if (Board.CurrentCards.Count < Board.MAX_CARDS)
                 {
-                    _summonedCards.Add(summonEvent.SummonedCard);
+                    if (TargetingCard.EffectType == Effect.SummonCopy)
+                    {
+                        _summonedCards.Add(_event.AffectedCard.Clone());
+                    }
+                    else
+                    {
+                        _summonedCards.Add(_event.AffectedCard);
+                    }
                 }
                 break;
             default:
@@ -169,7 +176,7 @@ public class Game
 
     public void CancelCard()
     {
-        if (TargetingCard.TriggerType == Trigger.OnPlay)
+        if (TargetingCard.TriggerType == EventType.Play)
         {
             Hand.AddCard(TargetingCard);
             Mana += TargetingCard.Cost;

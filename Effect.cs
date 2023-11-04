@@ -6,8 +6,12 @@ public enum Effect
     Draw,
     Destroy,
     Discover,
-    ChooseOne,
+    DiscoverMinion,
+    DiscoverSpell,
+    ChooseOneWrath,
+    ChooseOneRavenIdol,
     GainHealth,
     Summon,
+    SummonCopy,
     Hand
 }

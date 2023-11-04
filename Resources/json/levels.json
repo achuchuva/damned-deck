@@ -5,46 +5,46 @@
       "Anomalus"
     ],
     "InitialHandCards": [
-      "AcolyteOfPain",
-      "RavagingGhoul",
-      "BoulderfistOgre"
+      "Acolyte of Pain",
+      "Ravaging Ghoul",
+      "Boulderfist Ogre"
     ],
     "InitialDeckCards": [
-      "RavagingGhoul"
+      "Ravaging Ghoul"
     ]
   },
   {
     "InitialMana": 420,
     "InitialBoardCards": [
-      "AcolyteOfPain",
-      "BoulderfistOgre"
+      "Acolyte of Pain",
+      "Boulderfist Ogre"
     ],
     "InitialHandCards": [
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "RavagingGhoul",
+      "Boulderfist Ogre",
+      "Boulderfist Ogre",
+      "Ravaging Ghoul",
       "Anomalus"
     ],
     "InitialDeckCards": [
-      "BoulderfistOgre"
+      "Boulderfist Ogre"
     ]
   },
   {
     "InitialMana": 6,
     "InitialBoardCards": [
-      "AcolyteOfPain",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre"
+      "Acolyte of Pain",
+      "Boulderfist Ogre",
+      "Boulderfist Ogre",
+      "Boulderfist Ogre",
+      "Boulderfist Ogre",
+      "Boulderfist Ogre"
     ],
     "InitialHandCards": [
-      "KnightCaptain",
-      "ManaReservoir"
+      "Knight-Captain",
+      "Mana Reservoir"
     ],
     "InitialDeckCards": [
-      "BoulderfistOgre"
+      "Boulderfist Ogre"
     ]
   },
   {
@@ -52,19 +52,19 @@
     "InitialBoardCards": [
     ],
     "InitialHandCards": [
-      "MurlocTidehunter",
-      "RazorpetalVolley",
-      "RazorpetalLasher"
+      "Murloc Tidehunter",
+      "Razorpetal Volley",
+      "Razorpetal Lasher"
     ],
     "InitialDeckCards": []
   },
   {
     "InitialMana": 10,
     "InitialBoardCards": [
-      "BoulderfistOgre"
+      "Boulderfist Ogre"
     ],
     "InitialHandCards": [
-      "ManaReservoir",
+      "Mana Reservoir",
       "Darkbomb",
       "Darkbomb",
       "Darkbomb",
@@ -78,17 +78,17 @@
     "InitialBoardCards": [
     ],
     "InitialHandCards": [
-      "ExploreUngoro",
-      "ExploreUngoro",
-      "ExploreUngoro",
-      "ExploreUngoro",
-      "ExploreUngoro",
-      "BloodswornMercenary",
+      "Explore Un'Goro",
+      "Explore Un'Goro",
+      "Explore Un'Goro",
+      "Explore Un'Goro",
+      "Explore Un'Goro",
+      "Bloodsworn Mercenary",
       "Wrath",
-      "RavenIdol"
+      "Raven Idol"
     ],
     "InitialDeckCards": [
-      "BoulderfistOgre"
+      "Boulderfist Ogre"
     ]
   }
 ]
