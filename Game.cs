@@ -149,8 +149,6 @@ public class Game
         foreach (Card card in _summonedCards)
         {
             Board.AddCard(card, _isLeft ? 0 : Board.CurrentCards.Count);
-            _eventManager.RemoveSubscriber(e => card.HandleEvent(e, this));
-            _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
         }
 
         _deadCards.Clear();
