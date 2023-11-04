@@ -118,7 +118,10 @@ public class Game
                 Hand.AddCard(_event.AffectedCard);
                 break;
             case EventType.Hand:
-                Hand.AddCard(_event.AffectedCard);
+                for (int i = 0; i < _event.Amount; i++)
+                {
+                    Hand.AddCard(_event.AffectedCard.Clone());
+                }
                 break;
             case EventType.ChooseOne:
                 _targetingCard = _event.AffectedCard;

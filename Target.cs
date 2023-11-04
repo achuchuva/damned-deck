@@ -6,5 +6,7 @@ public enum Target
     All,
     AllMinions,
     AllButSelf,
-    Chosen
+    Chosen,
+    MurlocScout,
+    Razorpetal
 }

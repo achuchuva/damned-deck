@@ -30,15 +30,33 @@ public class Selection
                 switch (card.EffectType)
                 {
                     case Effect.Discover:
-                        game.Targets = SelectRandomCards(Program.AllCards, 3);
+                        List<Card> targets = new List<Card>();
+                        foreach (Card targetCard in Program.AllCards)
+                        {
+                            if (!targetCard.Token)
+                                targets.Add(targetCard);
+                        }
+                        game.Targets = SelectRandomCards(targets, 3);
                         game.Player.SetSelectionState(new DiscoverSelectionState());
                         break;
                     case Effect.DiscoverMinion:
-                        game.Targets = SelectRandomCards(Program.AllCards.Where(c => c is Minion).ToList(), 3);
+                        targets = new List<Card>();
+                        foreach (Card targetCard in Program.AllCards)
+                        {
+                            if (targetCard is Minion && !targetCard.Token)
+                                targets.Add(targetCard);
+                        }
+                        game.Targets = SelectRandomCards(targets, 3);
                         game.Player.SetSelectionState(new DiscoverSelectionState());
                         break;
                     case Effect.DiscoverSpell:
-                        game.Targets = SelectRandomCards(Program.AllCards.Where(c => c is Spell).ToList(), 3);
+                        targets = new List<Card>();
+                        foreach (Card targetCard in Program.AllCards)
+                        {
+                            if (targetCard is Spell && !targetCard.Token)
+                                targets.Add(targetCard);
+                        }
+                        game.Targets = SelectRandomCards(targets, 3);
                         game.Player.SetSelectionState(new DiscoverSelectionState());
                         break;
                     case Effect.ChooseOneRavenIdol:
@@ -57,6 +75,12 @@ public class Selection
                         }
                         break;
                 }
+                break;
+            case Target.MurlocScout:
+                card.HandleEffect(new List<Card>() { Program.GetCard("Murloc Scout", true) }, game);
+                break;
+            case Target.Razorpetal:
+                card.HandleEffect(new List<Card>() { Program.GetCard("Razorpetal", true) }, game);
                 break;
             default:
                 card.HandleEffect(new List<Card>(), game);
