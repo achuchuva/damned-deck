@@ -14,6 +14,8 @@ public class Minion : Card
         get { return _maxHealth; }
     }
 
+    public bool NeedsSummoning { get; set; }
+
     private bool _hasDied = false;
     public bool HasDied
     {
@@ -40,20 +42,27 @@ public class Minion : Card
         _hasDied = true;
     }
 
-    public override void Heal(int amount)
+    public override void AddHealth(int health)
     {
-        if (_health < _maxHealth)
-        {
-            _health = Math.Max(_health + amount, MaxHealth);
-        }
-    }
-
-    public override void SetMaxHealth(int health)
-    {
-        _maxHealth = MaxHealth;
+        _health += health;
+        _maxHealth += health;
     }
 
     public override void HandleEvent(Event _event, Game game) { }
 
     public override void HandleEffect(List<Card> targets, Game game) { }
+
+    public override Minion Clone()
+    {
+        return new Minion(
+            this.Cost,
+            this.Name,
+            this.Description,
+            this.EffectType,
+            this.TargetType,
+            this.TriggerType,
+            this.Image,
+            this.Health
+        );
+    }
 }

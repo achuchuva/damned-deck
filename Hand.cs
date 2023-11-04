@@ -17,14 +17,17 @@ public class Hand
 
     public void AddCard(Card card)
     {
-        _currentCards.Add(card);
+        if (_currentCards.Count < Hand.MAX_CARDS)
+        {
+            _currentCards.Add(card);
+        }
     }
 
     public void RemoveCard(Card card)
     {
         _currentCards.Remove(card);
     }
-    
+
     public void Update()
     {
         foreach (Card card in CurrentCards)

@@ -2,19 +2,19 @@ using SplashKitSDK;
 
 public class RavagingGhoul : Minion
 {
-    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Battlecry: Deal 1 damage to all other minions.", Effect.Damage, Target.AllButSelf, Trigger.OnPlay, SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
+    public RavagingGhoul() : base(3, "Ravaging Ghoul", "Ability: Deal 1 damage to all other minions.", Effect.Damage, Target.AllButSelf, Trigger.OnAbility, SplashKit.LoadBitmap("ravagingghoul", "Images/ravagingghoul.png"), 3)
     {
 
     }
 
     public override void HandleEvent(Event _event, Game game)
     {
-        if (!(_event is PlayEvent))
+        if (!(_event is AbilityEvent))
             return;
 
-        PlayEvent playEvent = (PlayEvent)_event;
+        AbilityEvent abilityEvent = (AbilityEvent)_event;
 
-        if (playEvent.PlayedCard == this)
+        if (abilityEvent.AbilityCard == this)
         {
             new Selection(game.Board.CurrentCards).GetTargets(this, game);
         }

@@ -16,7 +16,7 @@ public abstract class Card
     }
 
     private Trigger _triggerType;
-    public Trigger Trigger
+    public Trigger TriggerType
     {
         get { return _triggerType; }
     }
@@ -41,6 +41,12 @@ public abstract class Card
     public string Description
     {
         get { return _description; }
+    }
+
+    protected List<Card> _choices = new List<Card> { };
+    public List<Card> Choices
+    {
+        get { return _choices; }
     }
 
     private double _x;
@@ -106,13 +112,13 @@ public abstract class Card
 
     public virtual void Die() { }
 
-    public virtual void Heal(int amount) { }
-
-    public virtual void SetMaxHealth(int health) { }
+    public virtual void AddHealth(int health) { }
 
     public abstract void HandleEvent(Event e, Game game);
 
     public abstract void HandleEffect(List<Card> targets, Game game);
+
+    public abstract Card Clone();
 
     public bool IsMouseOver()
     {

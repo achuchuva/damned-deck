@@ -1,8 +1,8 @@
 using SplashKitSDK;
 
-public class FelOrcSoulfiend : Minion
+public class Awakened : Spell, IToken
 {
-    public FelOrcSoulfiend() : base(1, "Fel Orc Soulfiend", "After you play a card, take 1 damage.", Effect.Damage, Target.Self, Trigger.OnPlay, SplashKit.LoadBitmap("FelOrcSoulfiend", "Images/FelOrcSoulfiend.png"), 9)
+    public Awakened() : base(0, "Break Free", "Discover a spell.", Effect.Discover, Target.Chosen, SplashKit.LoadBitmap("awakened", "Images/awakened.png"))
     {
 
     }
@@ -13,8 +13,11 @@ public class FelOrcSoulfiend : Minion
             return;
 
         PlayEvent playEvent = (PlayEvent)_event;
-            
-        new Selection(game.Board.CurrentCards).GetTargets(this, game);
+
+        if (playEvent.PlayedCard == this)
+        {
+            new Selection(Program.AllCards.Where(c => c is Spell).ToList()).GetTargets(this, game);
+        }
     }
 
     public override void HandleEffect(List<Card> targets, Game game)
@@ -23,9 +26,8 @@ public class FelOrcSoulfiend : Minion
         {
             foreach (Card card in targets)
             {
-                game.EventManager.OnDamage(card, 1);
+                game.EventManager.OnDiscover(card);
             }
         }
     }
 }
-

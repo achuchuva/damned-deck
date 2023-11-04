@@ -31,7 +31,11 @@ public class Game
         set { _targetingCard = value; }
     }
 
+    private bool _isLeft;
+
     public List<Card>? Targets { get; set; }
+    private List<Card> _deadCards = new List<Card>();
+    private List<Card> _summonedCards = new List<Card>();
 
     private Trigger _currentTrigger;
     public Trigger CurrentTrigger
@@ -69,12 +73,13 @@ public class Game
         if (_mana >= card.Cost && (Board.MAX_CARDS > Board.CurrentCards.Count || card is Spell))
         {
             Hand.RemoveCard(card);
+            _targetingCard = card;
             if (card is Minion)
             {
-                Board.AddCard(card, isLeft ? 0 : Board.CurrentCards.Count);
+                _isLeft = isLeft;
+                _eventManager.OnSummon(card, isLeft ? 0 : Board.CurrentCards.Count);
             }
             _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
-            _targetingCard = card;
             _eventManager.OnPlay(card);
             Cleanup();
             _mana -= card.Cost;
@@ -101,14 +106,33 @@ public class Game
                 }
                 break;
             case DeathEvent deathEvent:
-                Minion deadMinion = (Minion)deathEvent.DestroyedCard;
-                deadMinion.Die();
+                _deadCards.Add(deathEvent.DestroyedCard);
                 break;
             case DrawEvent drawEvent:
                 Deck.DrawCard(Hand, drawEvent.Amount);
                 break;
             case ManaEvent manaEvent:
                 _mana += manaEvent.Amount;
+                break;
+            case DiscoverEvent discoverEvent:
+                Hand.AddCard(discoverEvent.DiscoveredCard);
+                break;
+            case HandEvent handEvent:
+                Hand.AddCard(handEvent.AddedCard);
+                break;
+            case ChooseOneEvent chooseOneEvent:
+                _targetingCard = chooseOneEvent.ChosenCard;
+                chooseOneEvent.ChosenCard.HandleEvent(new PlayEvent(chooseOneEvent.ChosenCard), this);
+                break;
+            case HealthEvent healthEvent:
+                Minion healedCard = (Minion)healthEvent.HealthCard;
+                healedCard.AddHealth(healthEvent.Amount);
+                break;
+            case SummonEvent summonEvent:
+                if (Board.CurrentCards.Count < Board.MAX_CARDS)
+                {
+                    _summonedCards.Add(summonEvent.SummonedCard);
+                }
                 break;
             default:
                 break;
@@ -117,17 +141,20 @@ public class Game
 
     public void Cleanup()
     {
-        List<Minion> minionsToDie = new List<Minion>();
-        foreach (Minion minion in Board.CurrentCards)
+        foreach (Card card in _deadCards)
         {
-            if (minion.HasDied)
-            {
-                minionsToDie.Add(minion);
-                _eventManager.RemoveSubscriber(e => minion.HandleEvent(e, this));
-            }
+            Board.RemoveCard(card);
+            _eventManager.RemoveSubscriber(e => card.HandleEvent(e, this));
+        }
+        foreach (Card card in _summonedCards)
+        {
+            Board.AddCard(card, _isLeft ? 0 : Board.CurrentCards.Count);
+            _eventManager.RemoveSubscriber(e => card.HandleEvent(e, this));
+            _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
         }
 
-        Board.CurrentCards.RemoveAll(minion => minionsToDie.Contains(minion));
+        _deadCards.Clear();
+        _summonedCards.Clear();
 
         CheckForGameOver();
     }
@@ -139,6 +166,15 @@ public class Game
             Deck.CurrentCards.Count == 0)
         {
             _levelComplete = true;
+        }
+    }
+
+    public void CancelCard()
+    {
+        if (TargetingCard.TriggerType == Trigger.OnPlay)
+        {
+            Hand.AddCard(TargetingCard);
+            Mana += TargetingCard.Cost;
         }
     }
 }

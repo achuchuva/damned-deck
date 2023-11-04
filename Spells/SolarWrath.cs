@@ -1,20 +1,21 @@
 using SplashKitSDK;
 
-public class Anomalus : Minion
+public class SolarWrath : Spell, IToken
 {
-    public Anomalus() : base(8, "Anomalus", "Deathrattle: Deal 10 damage to all minions.", Effect.Damage, Target.AllButSelf, Trigger.OnDeath, SplashKit.LoadBitmap("anomalus", "Images/anomalus.png"), 4)
+
+    public SolarWrath() : base(0, "Solar Wrath", "Deal 3 damage to a minion", Effect.Damage, Target.Chosen, SplashKit.LoadBitmap("solarwrath", "Images/solarwrath.png"))
     {
 
     }
 
     public override void HandleEvent(Event _event, Game game)
     {
-        if (!(_event is DeathEvent))
+        if (!(_event is PlayEvent))
             return;
 
-        DeathEvent deathEvent = (DeathEvent)_event;
+        PlayEvent playEvent = (PlayEvent)_event;
 
-        if (deathEvent.DestroyedCard == this)
+        if (playEvent.PlayedCard == this)
         {
             new Selection(game.Board.CurrentCards).GetTargets(this, game);
         }
@@ -26,7 +27,7 @@ public class Anomalus : Minion
         {
             foreach (Card card in targets)
             {
-                game.EventManager.OnDamage(card, 10);
+                game.EventManager.OnDamage(card, 3);
             }
         }
     }

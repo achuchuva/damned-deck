@@ -36,19 +36,14 @@ public class EventManager
         TriggerSubscribers(new DrawEvent(amount));
     }
 
-    public void OnHeal(Card healedCard, int amount)
-    {
-        TriggerSubscribers(new HealEvent(healedCard, amount));
-    }
-
     public void OnPlay(Card playedCard)
     {
         TriggerSubscribers(new PlayEvent(playedCard));
     }
 
-    public void OnSummon(List<Card> summonedCards)
+    public void OnSummon(Card summonedCard, int index)
     {
-        TriggerSubscribers(new SummonEvent(summonedCards));
+        TriggerSubscribers(new SummonEvent(summonedCard, index));
     }
 
     public void OnAbility(Card abilityCard)
@@ -59,6 +54,26 @@ public class EventManager
     public void OnManaChange(int amount)
     {
         TriggerSubscribers(new ManaEvent(amount));
+    }
+
+    public void OnDiscover(Card discoveredCard)
+    {
+        TriggerSubscribers(new DiscoverEvent(discoveredCard));
+    }
+
+    public void OnChooseOne(Card chosenCard)
+    {
+        TriggerSubscribers(new ChooseOneEvent(chosenCard));
+    }
+
+    public void OnGainHealth(Card healthCard, int amount)
+    {
+        TriggerSubscribers(new HealthEvent(healthCard, amount));
+    }
+
+    public void OnHandAdd(Card addedCard)
+    {
+        TriggerSubscribers(new HandEvent(addedCard));
     }
 
     public void TriggerSubscribers(Event _event)

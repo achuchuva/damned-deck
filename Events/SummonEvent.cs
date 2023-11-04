@@ -2,14 +2,21 @@ using System;
 
 public class SummonEvent : Event
 {
-    private List<Card> _summonedCards;
-    public List<Card> SummonedCards
+    private Card _summonedCard;
+    public Card SummonedCard
     {
-        get { return _summonedCards; }
+        get { return _summonedCard; }
     }
 
-    public SummonEvent(List<Card> summonedCards)
+    private int _index;
+    public int Index
     {
-        _summonedCards = summonedCards;
+        get { return _index; }
+    }
+
+    public SummonEvent(Card summonedCard, int index)
+    {
+        _summonedCard = summonedCard;
+        _index = index;
     }
 }

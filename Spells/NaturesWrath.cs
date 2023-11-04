@@ -1,8 +1,8 @@
 using SplashKitSDK;
 
-public class FelOrcSoulfiend : Minion
+public class NaturesWrath : Spell, IToken
 {
-    public FelOrcSoulfiend() : base(1, "Fel Orc Soulfiend", "After you play a card, take 1 damage.", Effect.Damage, Target.Self, Trigger.OnPlay, SplashKit.LoadBitmap("FelOrcSoulfiend", "Images/FelOrcSoulfiend.png"), 9)
+    public NaturesWrath() : base(0, "Nature's Wrath", "Deal 1 damage to a minion. Draw a card", Effect.Damage, Target.Chosen, SplashKit.LoadBitmap("natureswrath", "Images/natureswrath.png"))
     {
 
     }
@@ -13,8 +13,11 @@ public class FelOrcSoulfiend : Minion
             return;
 
         PlayEvent playEvent = (PlayEvent)_event;
-            
-        new Selection(game.Board.CurrentCards).GetTargets(this, game);
+
+        if (playEvent.PlayedCard == this)
+        {
+            new Selection(game.Board.CurrentCards).GetTargets(this, game);
+        }
     }
 
     public override void HandleEffect(List<Card> targets, Game game)
@@ -24,8 +27,8 @@ public class FelOrcSoulfiend : Minion
             foreach (Card card in targets)
             {
                 game.EventManager.OnDamage(card, 1);
+                game.EventManager.OnDraw(1);
             }
         }
     }
 }
-

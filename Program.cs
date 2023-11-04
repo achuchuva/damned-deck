@@ -1,8 +1,36 @@
 using System.Text.Json;
 using SplashKitSDK;
 
-public class Program
+public static class Program
 {
+    public static List<Card> AllCards
+    {
+        get
+        {
+            return new List<Card> {
+                new AcolyteOfPain(),
+                new Anomalus(),
+                new BoulderfistOgre(),
+                new KnightCaptain(),
+                new ManaReservoir(),
+                new RavagingGhoul(),
+                new Darkbomb(),
+                new ExploreUngoro(),
+                new TwistingNether(),
+                new Wrath(),
+                new RavenIdol(),
+                new BloodswornMercenary(),
+                new TheDarkness(),
+                new MurlocTidehunter(),
+                new RazorpetalLasher(),
+                new RazorpetalVolley(),
+                new RiskySkipper(),
+                new BeamingSidekick(),
+                new FelOrcSoulfiend()
+            };
+        }
+    }
+
     public static void Main()
     {
         List<Level>? levels = LoadLevels();

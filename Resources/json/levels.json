@@ -14,18 +14,6 @@
     ]
   },
   {
-    "InitialMana": 69,
-    "InitialBoardCards": [
-      "BoulderfistOgre"
-    ],
-    "InitialHandCards": [
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "RavagingGhoul"
-    ],
-    "InitialDeckCards": []
-  },
-  {
     "InitialMana": 420,
     "InitialBoardCards": [
       "AcolyteOfPain",
@@ -60,18 +48,13 @@
     ]
   },
   {
-    "InitialMana": 8,
+    "InitialMana": 9,
     "InitialBoardCards": [
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre",
-      "BoulderfistOgre"
     ],
     "InitialHandCards": [
-      "ManaReservoir",
-      "TwistingNether"
+      "MurlocTidehunter",
+      "RazorpetalVolley",
+      "RazorpetalLasher"
     ],
     "InitialDeckCards": []
   },
@@ -89,5 +72,23 @@
       "Darkbomb"
     ],
     "InitialDeckCards": []
+  },
+  {
+    "InitialMana": 10,
+    "InitialBoardCards": [
+    ],
+    "InitialHandCards": [
+      "ExploreUngoro",
+      "ExploreUngoro",
+      "ExploreUngoro",
+      "ExploreUngoro",
+      "ExploreUngoro",
+      "BloodswornMercenary",
+      "Wrath",
+      "RavenIdol"
+    ],
+    "InitialDeckCards": [
+      "BoulderfistOgre"
+    ]
   }
 ]

@@ -4,5 +4,10 @@ public enum Effect
     Mana,
     Damage,
     Draw,
-    Destroy
+    Destroy,
+    Discover,
+    ChooseOne,
+    GainHealth,
+    Summon,
+    Hand
 }

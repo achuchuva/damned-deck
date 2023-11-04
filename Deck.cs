@@ -33,10 +33,7 @@ public class Deck
         List<Card> cardsToDraw = _currentCards.GetRange(0, amount);
         foreach (Card card in cardsToDraw)
         {
-            if (hand.CurrentCards.Count < Hand.MAX_CARDS)
-            {
-                hand.AddCard(card);
-            }
+            hand.AddCard(card);
         }
         _currentCards.RemoveRange(0, amount);
     }

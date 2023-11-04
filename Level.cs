@@ -85,6 +85,20 @@ public class Level
                 return new TwistingNether();
             case "Darkbomb":
                 return new Darkbomb();
+            case "ExploreUngoro":
+                return new ExploreUngoro();
+            case "Wrath":
+                return new Wrath();
+            case "RavenIdol":
+                return new RavenIdol();
+            case "BloodswornMercenary":
+                return new BloodswornMercenary();
+            case "MurlocTidehunter":
+                return new MurlocTidehunter();
+            case "RazorpetalVolley":
+                return new RazorpetalVolley();
+            case "RazorpetalLasher":
+                return new RazorpetalLasher();
             default:
                 throw new Exception("Unknown card ID: " + id);
         }

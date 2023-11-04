@@ -12,4 +12,15 @@ public class Spell : Card
 
     public override void HandleEffect(List<Card> targets, Game game) { }
 
+    public override Spell Clone()
+    {
+        return new Spell(
+            this.Cost,
+            this.Name,
+            this.Description,
+            this.EffectType,
+            this.TargetType,
+            this.Image
+        );
+    }
 }

@@ -27,6 +27,7 @@ public class CardSelectionState : IPlayerSelectionState
     {
         if (level.Game.LevelComplete)
         {
+            SplashKit.Delay(3000);
             level.SetUp(player);
             player.CurrentLevel = null;
             player.SetSelectionState(new MenuSelectionState());
@@ -91,7 +92,25 @@ public class TargetSelectionState : IPlayerSelectionState
 
         if (SplashKit.KeyDown(KeyCode.EscapeKey))
         {
+            level.Game.CancelCard();
             player.SetSelectionState(new CardSelectionState());
+        }
+    }
+}
+
+public class DiscoverSelectionState : IPlayerSelectionState
+{
+    public void Update(Menu menu, Level level, Player player)
+    {
+        foreach (Card card in level.Game.Targets)
+        {
+            if (SplashKit.MouseClicked(MouseButton.LeftButton) && card.IsMouseOver())
+            {
+                player.SetSelectionState(new CardSelectionState());
+                level.Game.TargetingCard.HandleEffect(new List<Card> { card }, level.Game);
+                level.Game.Cleanup();
+                break;
+            }
         }
     }
 }

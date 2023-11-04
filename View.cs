@@ -39,6 +39,23 @@ public class View
                 level.Game.TargetingCard.Width / 2,
                 level.Game.TargetingCard.Height / 2);
         }
+        else if (level.Game.Player.SelectionState is DiscoverSelectionState)
+        {
+            int totalWidth = level.Game.Targets.Count * 125;
+            int startX = 500 - totalWidth / 2;
+            foreach (Card card in level.Game.Targets)
+            {
+                card.X = startX;
+                card.Y = 300;
+                DrawCard(card);
+                startX += 300;
+            }
+        }
+
+        if (level.Game.LevelComplete)
+        {
+            DrawWinText();
+        }
     }
 
     public void DrawButton(Button button, string text = "")
@@ -162,5 +179,10 @@ public class View
         SplashKit.DrawLine(Color.Red, startX + offsetX, startY + offsetY, mouseX, mouseY);
 
         SplashKit.FillCircle(Color.Red, mouseX, mouseY, 10);
+    }
+
+    public void DrawWinText()
+    {
+        SplashKit.DrawText("Cards Obliterated", Color.Green, "Fonts/Roboto-Regular.ttf", 150, 25, 300);
     }
 }
