@@ -24,12 +24,7 @@ public class Game
         get { return _deck; }
     }
 
-    private Card? _targetingCard;
-    public Card? TargetingCard
-    {
-        get { return _targetingCard; }
-        set { _targetingCard = value; }
-    }
+    public Card? TargetingCard { get;set; }
 
     private bool _isLeft;
 
@@ -44,19 +39,9 @@ public class Game
         set { _currentTrigger = value; }
     }
 
-    private int _mana;
-    public int Mana
-    {
-        get { return _mana; }
-        set { _mana = value; }
-    }
+    public int Mana { get;set; }
 
-    private bool _levelComplete = false;
-    public bool LevelComplete
-    {
-        get { return _levelComplete; }
-        set { _levelComplete = value; }
-    }
+    public bool LevelComplete { get;set; }
 
     public Game()
     {
@@ -65,15 +50,15 @@ public class Game
         _board = new Board();
         _hand = new Hand();
         _deck = new Deck();
-        _mana = 0;
+        Mana = 0;
     }
 
     public void PlayCard(Card card, bool isLeft)
     {
-        if (_mana >= card.Cost && (Board.MAX_CARDS > Board.CurrentCards.Count || card is Spell))
+        if (Mana >= card.Cost && (Board.MAX_CARDS > Board.CurrentCards.Count || card is Spell))
         {
             Hand.RemoveCard(card);
-            _targetingCard = card;
+            TargetingCard = card;
             if (card is Minion)
             {
                 _isLeft = isLeft;
@@ -82,13 +67,13 @@ public class Game
             _eventManager.AddSubscriber(e => card.HandleEvent(e, this));
             _eventManager.TriggerSubscribers(new Event(EventType.Play, card));
             Cleanup();
-            _mana -= card.Cost;
+            Mana -= card.Cost;
         }
     }
 
     public void UseAbility(Card card)
     {
-        _targetingCard = card;
+        TargetingCard = card;
         _eventManager.TriggerSubscribers(new Event(EventType.Ability, card));
         Cleanup();
     }
@@ -112,7 +97,7 @@ public class Game
                 Deck.DrawCard(Hand, _event.Amount);
                 break;
             case EventType.Mana:
-                _mana += _event.Amount;
+                Mana += _event.Amount;
                 break;
             case EventType.Discover:
                 Hand.AddCard(_event.AffectedCard);
@@ -124,7 +109,7 @@ public class Game
                 }
                 break;
             case EventType.ChooseOne:
-                _targetingCard = _event.AffectedCard;
+                TargetingCard = _event.AffectedCard;
                 _event.AffectedCard.HandleEvent(new Event(EventType.Play, _event.AffectedCard), this);
                 break;
             case EventType.Health:
@@ -167,13 +152,13 @@ public class Game
         CheckForGameOver();
     }
 
-    public void CheckForGameOver()
+    private void CheckForGameOver()
     {
         if (Board.CurrentCards.Count == 0 &&
             Hand.CurrentCards.Count == 0 &&
             Deck.CurrentCards.Count == 0)
         {
-            _levelComplete = true;
+            LevelComplete = true;
         }
     }
 

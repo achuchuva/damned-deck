@@ -37,9 +37,4 @@ public class Deck
         }
         _currentCards.RemoveRange(0, amount);
     }
-
-    public void Shuffle()
-    {
-
-    }
 }

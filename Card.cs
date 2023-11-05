@@ -55,25 +55,8 @@ public abstract class Card
         get { return _description; }
     }
 
-    protected List<Card> _choices = new List<Card> { };
-    public List<Card> Choices
-    {
-        get { return _choices; }
-    }
-
-    private double _x;
-    public double X
-    {
-        get { return _x; }
-        set { _x = value; }
-    }
-
-    private double _y;
-    public double Y
-    {
-        get { return _y; }
-        set { _y = value; }
-    }
+    public double X { get;set; }
+    public double Y { get;set; }
 
     private int _width;
     public int Width
@@ -87,25 +70,10 @@ public abstract class Card
         get { return _height; }
     }
 
-    private bool _isBeingDragged = false;
-    public bool IsBeingDragged
-    {
-        get { return _isBeingDragged; }
-        set { _isBeingDragged = value; }
-    }
+    public bool IsBeingDragged { get; set; }
 
-    private double _offsetX;
-    public double OffsetX
-    {
-        get { return _offsetX; }
-        set { _offsetX = value; }
-    }
-    private double _offsetY;
-    public double OffsetY
-    {
-        get { return _offsetY; }
-        set { _offsetY = value; }
-    }
+    public double OffsetX{ get; set; }
+    public double OffsetY{ get; set; }
 
     public Card(int cost, string name, string desc, Effect effectType, Target targetType, EventType triggerType, List<Event> effectEvents, Bitmap image, bool token)
     {
@@ -162,15 +130,15 @@ public abstract class Card
 
     public void Update()
     {
-        if (_isBeingDragged)
+        if (IsBeingDragged)
         {
-            _x = SplashKit.MouseX() - _offsetX;
-            _y = SplashKit.MouseY() - _offsetY;
+            X = SplashKit.MouseX() - OffsetX;
+            Y = SplashKit.MouseY() - OffsetY;
         }
         else
         {
-            _offsetX = SplashKit.MouseX() - X;
-            _offsetY = SplashKit.MouseY() - Y;
+            OffsetX = SplashKit.MouseX() - X;
+            OffsetY = SplashKit.MouseY() - Y;
         }
     }
 }

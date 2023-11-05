@@ -58,7 +58,7 @@ public class View
         }
     }
 
-    public void DrawButton(Button button, string text = "")
+    private void DrawButton(Button button, string text = "")
     {
         SplashKit.DrawBitmap(button.Image, button.Rectangle.X, button.Rectangle.Y);
         SplashKit.DrawText(text, Color.Black, "Fonts/aptos-black.ttf", 75, button.Rectangle.X + 25, button.Rectangle.Y + 5);
@@ -171,7 +171,7 @@ public class View
         return lines;
     }
 
-    public void DrawArrow(double startX, double startY, int offsetX, int offsetY)
+    private void DrawArrow(double startX, double startY, int offsetX, int offsetY)
     {
         double mouseX = SplashKit.MouseX();
         double mouseY = SplashKit.MouseY();
@@ -181,7 +181,7 @@ public class View
         SplashKit.FillCircle(Color.Red, mouseX, mouseY, 10);
     }
 
-    public void DrawWinText()
+    private void DrawWinText()
     {
         SplashKit.DrawText("Cards Obliterated", Color.Green, "Fonts/Roboto-Regular.ttf", 150, 25, 300);
     }
